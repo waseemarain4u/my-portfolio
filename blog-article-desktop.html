@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shipping Flutter to Desktop: what I wish I'd known — Waseem Akram</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet"/>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{display:['PT Sans','sans-serif'],body:['DM Sans','sans-serif']},colors:{accent:'#2563EB','accent-light':'#3B82F6'}}}}</script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;}html{font-family:'DM Sans',sans-serif;}h1,h2,h3,h4,h5,h6{font-family:'PT Sans',sans-serif;}
+    body{transition:background-color .3s,color .3s;}
+    ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:#2563EB;border-radius:99px;}
+    .nav-link{position:relative;}.nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:currentColor;transition:width .25s cubic-bezier(.4,0,.2,1);}.nav-link:hover::after{width:100%;}
+    .btn-primary{position:relative;overflow:hidden;}.btn-primary::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s cubic-bezier(.4,0,.2,1);}.btn-primary:hover::after{left:160%;}
+    .pf{overflow:hidden;background:#e4e4e7;}.pf img{width:100%;height:100%;object-fit:cover;display:block;}
+    .prose p{color:rgb(113 113 122);margin-bottom:1.25rem;line-height:1.75;}
+    .prose h2{font-family:'PT Sans',sans-serif;font-weight:700;font-size:1.5rem;color:rgb(24 24 27);margin-bottom:1rem;margin-top:2.5rem;}
+    .dark .prose p{color:rgb(161 161 170);}.dark .prose h2{color:white;}
+    .prose pre{background:rgb(24 24 27);color:#e4e4e7;padding:1.25rem;border-radius:0.75rem;overflow-x:auto;font-size:0.8rem;margin:1.5rem 0;font-family:monospace;}
+    .prose ul{list-style:disc;padding-left:1.5rem;color:rgb(113 113 122);margin-bottom:1.25rem;line-height:1.75;}.dark .prose ul{color:rgb(161 161 170);}
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded',()=>{
+      const d=document.documentElement;
+      const s=localStorage.getItem('theme');
+      if(s==='dark'||(s===null&&window.matchMedia('(prefers-color-scheme:dark)').matches)){d.classList.add('dark');}
+      document.getElementById('yr').textContent=new Date().getFullYear();
+    });
+  </script>
+</head>
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
+
+  <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-display font-bold text-xl tracking-tight">
+        <span class="text-zinc-900 dark:text-white">waseem</span><span class="text-accent">.</span>
+      </a>
+      <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <li><a href="index.html#services" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Skills</a></li>
+        <li><a href="projects.html" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Work</a></li>
+        <li><a href="index.html#about" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">About</a></li>
+        <li><a href="blog.html" class="nav-link text-accent">Blog</a></li>
+        <li><a href="index.html#contact" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Contact</a></li>
+      </ul>
+      <div class="flex items-center gap-3">
+        <button onclick="const d=document.documentElement;d.classList.toggle('dark');localStorage.setItem('theme',d.classList.contains('dark')?'dark':'light')" class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors" aria-label="Toggle dark mode">
+          <svg class="w-4 h-4 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg class="w-4 h-4 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+        </button>
+        <a href="index.html#contact" class="hidden md:inline-flex items-center gap-2 btn-primary bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors">Hire me &rarr;</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="pt-24">
+    <section class="pt-12 pb-8 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="max-w-3xl mx-auto px-6 relative z-10">
+        <a href="blog.html" class="inline-flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400 hover:text-accent transition-colors mb-8">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          All articles
+        </a>
+        <div class="flex items-center gap-3 mb-5">
+          <span class="text-xs bg-blue-50 dark:bg-zinc-800 text-accent border border-blue-200 dark:border-zinc-700 px-2.5 py-1 rounded-full">Flutter</span>
+          <span class="text-xs text-zinc-400">Oct 5, 2024 · 7 min read</span>
+        </div>
+        <h1 class="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white mb-5 leading-tight">Shipping Flutter to Desktop: what I wish I'd known</h1>
+        <p class="text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed mb-8">Expanding a mobile Flutter app to Windows and macOS surfaces a whole new set of challenges. Here's what to expect and how to handle it.</p>
+        <div class="flex items-center gap-3 pb-8 border-b border-zinc-100 dark:border-zinc-800">
+          <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-bold text-sm shrink-0">WA</div>
+          <div>
+            <p class="text-sm font-medium text-zinc-900 dark:text-white">Waseem Akram</p>
+            <p class="text-xs text-zinc-500">Senior Flutter Developer &amp; Lead Developer</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="max-w-4xl mx-auto px-6 mb-12">
+      <div class="pf w-full rounded-2xl overflow-hidden" style="height:420px">
+        <img src="https://images.unsplash.com/photo-1593642532454-e138e28a63f4?w=1200&q=80" alt="Shipping Flutter to Desktop: what I wish I'd known" loading="eager">
+      </div>
+    </div>
+
+    <article class="max-w-3xl mx-auto px-6 pb-24 prose">
+      <p>Flutter's promise of "one codebase, every platform" is mostly true — until you try to actually ship to desktop. I've taken two Flutter apps to Windows and macOS, and the experience taught me a lot about where the gaps are between the pitch and the reality.</p>
+
+      <h2>The layout assumptions break</h2>
+      <p>Mobile layouts assume a narrow portrait screen. Desktop apps live in wide, resizable windows. Every hardcoded width, every full-screen dialog, every bottom sheet — they all look wrong on a 1400px wide window. Before starting a desktop port, I now audit the codebase for layout assumptions and plan a responsive pass.</p>
+      <p>The <code>LayoutBuilder</code> and <code>MediaQuery</code> APIs give you the tools to handle this, but it requires deliberate design decisions. What should the sidebar look like? When should you show a master-detail layout instead of stacked navigation? These are design problems, not engineering ones — involve your designer early.</p>
+
+      <h2>Input model is completely different</h2>
+      <p>Mobile apps are built around touch. Desktop users have a mouse, keyboard shortcuts, right-click context menus, and hover states. None of this comes for free in Flutter.</p>
+      <ul>
+        <li>Add keyboard shortcuts with <code>Shortcuts</code> and <code>Actions</code> widgets</li>
+        <li>Add hover states using <code>MouseRegion</code></li>
+        <li>Add right-click menus with <code>GestureDetector</code> on secondary tap</li>
+        <li>Make sure all interactive elements have appropriate cursor changes</li>
+      </ul>
+      <p>Skipping these doesn't break the app, but it makes it feel unfinished to desktop users.</p>
+
+      <h2>Platform plugins are the biggest risk</h2>
+      <p>Most Flutter plugins were written for Android and iOS. Desktop support was added later — and not always completely. Before committing to a desktop port, audit every plugin you use. Check the pub.dev page for Windows and macOS support badges. I've been burned by plugins that listed desktop support but had critical missing functionality on one platform.</p>
+      <p>For plugins without desktop support, your options are: find an alternative, implement the platform channel yourself, or use a conditional import to stub the functionality on desktop.</p>
+
+      <h2>Window management needs attention</h2>
+      <p>Flutter desktop apps launch in a default window size that's often wrong for your app. Use the <code>window_manager</code> plugin to set a minimum size, remember window position across launches, and handle close events properly. These details separate a polished desktop app from a mobile app running in a window.</p>
+      <p>The overall conclusion: Flutter desktop is genuinely production-ready in 2024, but the work to get there is mostly design and UX work, not engineering. Plan for an extra sprint to make the app feel native on each platform.</p>
+    </article>
+
+    <section class="bg-zinc-50 dark:bg-zinc-900/40 py-16">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="font-display font-bold text-2xl text-zinc-900 dark:text-white mb-8">More articles</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          <article class="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-all hover:-translate-y-1">
+            <div class="pf w-full h-40"><img src="https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=700&q=80" alt="Clean Architecture" loading="lazy"></div>
+            <div class="p-5"><p class="text-xs text-zinc-400 mb-2">May 10, 2025</p>
+            <a href="blog-article.html"><h3 class="font-display font-bold text-base text-zinc-900 dark:text-white group-hover:text-accent transition-colors">Why I switched from MVC to Clean Architecture in Flutter</h3></a></div>
+          </article>
+          <article class="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-all hover:-translate-y-1">
+            <div class="pf w-full h-40"><img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&q=80" alt="Performance" loading="lazy"></div>
+            <div class="p-5"><p class="text-xs text-zinc-400 mb-2">Dec 2, 2024</p>
+            <a href="blog-article-performance.html"><h3 class="font-display font-bold text-base text-zinc-900 dark:text-white group-hover:text-accent transition-colors">5 Flutter performance mistakes I made so you don't have to</h3></a></div>
+          </article>
+          <article class="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-all hover:-translate-y-1">
+            <div class="pf w-full h-40"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=700&q=80" alt="State management" loading="lazy"></div>
+            <div class="p-5"><p class="text-xs text-zinc-400 mb-2">Feb 18, 2025</p>
+            <a href="blog-article-bloc.html"><h3 class="font-display font-bold text-base text-zinc-900 dark:text-white group-hover:text-accent transition-colors">BLoC, Riverpod, or Provider? My honest take after 4 years</h3></a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-zinc-100 dark:border-zinc-900">
+    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-zinc-400">&copy; <span id="yr"></span> Waseem Akram. All rights reserved.</p>
+      <p class="text-xs text-zinc-500">Senior Flutter Developer &amp; Lead Developer</p>
+    </div>
+  </footer>
+
+</body>
+</html>

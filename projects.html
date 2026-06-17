@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" x-data="projects()" :class="{'dark':dark}" x-init="init()" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projects — Waseem Akram</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet"/>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{display:['PT Sans','sans-serif'],body:['DM Sans','sans-serif']},colors:{accent:'#2563EB','accent-light':'#3B82F6'}}}}</script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;}html{font-family:'DM Sans',sans-serif;}h1,h2,h3,h4,h5,h6{font-family:'PT Sans',sans-serif;}
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .55s cubic-bezier(.4,0,.2,1),transform .55s cubic-bezier(.4,0,.2,1);}.reveal.visible{opacity:1;transform:translateY(0);}
+    .nav-link{position:relative;}.nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:currentColor;transition:width .25s cubic-bezier(.4,0,.2,1);}.nav-link:hover::after{width:100%;}
+    ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:#2563EB;border-radius:99px;}
+    body{transition:background-color .3s,color .3s;}body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.3;}
+    .btn-primary{position:relative;overflow:hidden;}.btn-primary::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s cubic-bezier(.4,0,.2,1);}.btn-primary:hover::after{left:160%;}
+    [x-cloak]{display:none!important;}.photo-frame{position:relative;overflow:hidden;background:#e4e4e7;}.photo-frame img{width:100%;height:100%;object-fit:cover;display:block;}
+    .project-card{transition:transform .3s cubic-bezier(.4,0,.2,1),border-color .2s;}.project-card:hover{transform:translateY(-4px);}
+  </style>
+</head>
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-body antialiased">
+
+  <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+    :class="scrolled?'bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5':'bg-transparent'">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-display font-bold text-xl tracking-tight z-10">
+        <span class="text-zinc-900 dark:text-white">waseem</span><span class="text-accent">.</span>
+      </a>
+      <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <li><a href="index.html#services" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Skills</a></li>
+        <li><a href="projects.html" class="nav-link text-accent font-medium">Work</a></li>
+        <li><a href="index.html#about" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">About</a></li>
+        <li><a href="index.html#experience" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Experience</a></li>
+        <li><a href="index.html#contact" class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Contact</a></li>
+      </ul>
+      <div class="flex items-center gap-3">
+        <button @click="dark=!dark;localStorage.setItem('theme',dark?'dark':'light')" class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors" :aria-label="dark?'Light mode':'Dark mode'">
+          <svg x-show="!dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg x-show="dark"  class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+        </button>
+        <a href="index.html#contact" class="hidden md:inline-flex items-center gap-2 btn-primary bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors">Hire me &rarr;</a>
+        <button @click="mobileMenu=!mobileMenu" class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800" aria-label="Toggle menu">
+          <svg x-show="!mobileMenu" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg x-show="mobileMenu" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </nav>
+    <div x-show="mobileMenu" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="md:hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900">
+      <ul class="flex flex-col px-6 py-4 gap-4 text-sm font-medium">
+        <li><a href="index.html#services" @click="mobileMenu=false" class="block text-zinc-700 dark:text-zinc-300">Skills</a></li>
+        <li><a href="projects.html" class="block text-accent font-medium">Work</a></li>
+        <li><a href="index.html#about" @click="mobileMenu=false" class="block text-zinc-700 dark:text-zinc-300">About</a></li>
+        <li><a href="index.html#experience" @click="mobileMenu=false" class="block text-zinc-700 dark:text-zinc-300">Experience</a></li>
+        <li><a href="index.html#contact" @click="mobileMenu=false" class="block text-zinc-700 dark:text-zinc-300">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="pt-20 pb-12 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="max-w-6xl mx-auto px-6 relative z-10">
+        <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Portfolio</p>
+        <h1 class="reveal font-display font-bold text-5xl md:text-6xl text-zinc-900 dark:text-white leading-tight mb-4">All Projects</h1>
+        <p class="reveal text-lg text-zinc-500 dark:text-zinc-400 max-w-xl leading-relaxed mb-8">15+ apps shipped across Android, Flutter, and cross-platform — from e-commerce ecosystems to AI tools and enterprise HRMS.</p>
+        <div class="reveal flex flex-wrap gap-2">
+          <template x-for="f in filterOptions" :key="f.value">
+            <button
+              @click="filter = f.value"
+              :class="filter === f.value ? 'bg-accent text-white border-accent' : 'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700 hover:border-accent'"
+              class="text-sm px-4 py-1.5 rounded-full border transition-colors"
+              x-text="f.label">
+            </button>
+          </template>
+        </div>
+      </div>
+    </section>
+
+    <section class="pb-24">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <template x-for="p in allProjects" :key="p.id">
+            <div
+              x-show="filter === 'all' || p.category === filter"
+              x-transition:enter="transition ease-out duration-300"
+              x-transition:enter-start="opacity-0 scale-95 translate-y-2"
+              x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+              x-transition:leave="transition ease-in duration-200"
+              x-transition:leave-start="opacity-100 scale-100"
+              x-transition:leave-end="opacity-0 scale-95">
+              <article class="project-card group h-full rounded-2xl overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
+                <div class="block photo-frame w-full h-52">
+                  <img :src="p.img" :alt="p.title" loading="lazy"/>
+                </div>
+                <div class="p-6">
+                  <div class="flex flex-wrap gap-2 mb-3">
+                    <template x-for="tag in p.tags" :key="tag">
+                      <span class="text-xs px-2.5 py-1 rounded-full"
+                        :class="tag === p.categoryLabel ? 'bg-blue-50 dark:bg-zinc-800 text-accent border border-blue-200 dark:border-zinc-700' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'"
+                        x-text="tag"></span>
+                    </template>
+                  </div>
+                  <h3 class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-2" x-text="p.title"></h3>
+                  <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4" x-text="p.desc"></p>
+
+                </div>
+              </article>
+            </div>
+          </template>
+        </div>
+        <div x-show="visibleCount === 0" x-cloak class="text-center py-20">
+          <p class="text-zinc-400 text-sm">No projects in this category.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pb-24">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="bg-zinc-100 dark:bg-zinc-900 rounded-3xl p-10 md:p-14 text-center relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="absolute bottom-0 left-0 w-40 h-40 bg-accent/10 rounded-full blur-2xl pointer-events-none"></div>
+          <div class="relative z-10">
+            <p class="text-xs font-medium text-accent tracking-widest uppercase mb-4">Ready to start?</p>
+            <h2 class="font-display font-bold text-3xl md:text-4xl text-zinc-900 dark:text-white mb-4">Want your app built right?</h2>
+            <p class="text-zinc-500 dark:text-zinc-400 max-w-md mx-auto mb-8">I'm available for new Flutter and Android projects. Tell me what you're building and let's see how I can help.</p>
+            <a href="index.html#contact" class="inline-flex items-center gap-2 btn-primary bg-accent text-white font-medium px-8 py-3.5 rounded-full hover:bg-accent-light transition-colors">Start a project &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-zinc-100 dark:border-zinc-900">
+    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-zinc-400">&copy; <span id="year"></span> Waseem Akram. All rights reserved.</p>
+      <p class="text-xs text-zinc-500">Built with Tailwind CSS &amp; Alpine.js</p>
+    </div>
+  </footer>
+
+  <script>
+    function projects() {
+      return {
+        dark: false, scrolled: false, mobileMenu: false, filter: 'all',
+        filterOptions: [
+          { value: 'all',       label: 'All (16)' },
+          { value: 'flutter',   label: 'Flutter' },
+          { value: 'android',   label: 'Android' },
+          { value: 'enterprise',label: 'Enterprise' },
+          { value: 'ecommerce', label: 'E-commerce' },
+        ],
+        allProjects: [
+          { id:1,  title:'AI Content Master',         category:'flutter',    categoryLabel:'Flutter',    tags:['Flutter','AI','Cross-platform'],         year:'2024', desc:'AI-powered content generation app with rich text editing, cloud sync, and a seamless multi-platform experience.',           img:'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=700&q=80',  url:'case-study.html' },
+          { id:2,  title:'One Access Portal',         category:'flutter',    categoryLabel:'Flutter',    tags:['Flutter','Portal'],                      year:'2024', desc:'Unified access portal delivering a single sign-on experience across multiple enterprise services.',                      img:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&q=80',  url:'case-study.html' },
+          { id:3,  title:'Trade Your Container',      category:'flutter',    categoryLabel:'Flutter',    tags:['Flutter','Logistics'],                   year:'2023', desc:'Cross-platform logistics marketplace for container trading with real-time listings and negotiation flows.',            img:'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=700&q=80', url:'case-study.html' },
+          { id:4,  title:'GetVPN',                    category:'flutter',    categoryLabel:'Flutter',    tags:['Flutter','Security'],                    year:'2023', desc:'Cross-platform VPN client focused on performance and a one-tap connection experience on Android and iOS.',            img:'https://images.unsplash.com/photo-1512428559087-560fa5ceab42?w=700&q=80', url:'case-study.html' },
+          { id:5,  title:'Humwell',                   category:'flutter',    categoryLabel:'Flutter',    tags:['Flutter','Health','Dual Language'],       year:'2023', desc:'Dual-language health and wellness app serving users in English and Urdu with guided care journeys.',                img:'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=700&q=80', url:'case-study.html' },
+          { id:6,  title:'ClientConnect+',            category:'enterprise', categoryLabel:'Enterprise', tags:['Enterprise','Flutter','CRM'],            year:'2023', desc:'CRM mobile app for managing client relationships, follow-ups, and deal pipelines on the go.',                       img:'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&q=80', url:'case-study.html' },
+          { id:7,  title:'Gab — BOT',                 category:'flutter',    categoryLabel:'Flutter',    tags:['Flutter','AI','Chatbot'],                year:'2022', desc:'Conversational AI chatbot application with natural language processing and contextual memory.',                     img:'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=700&q=80', url:'case-study.html' },
+          { id:8,  title:'OneGo — PDF Converter',     category:'flutter',    categoryLabel:'Flutter',    tags:['Flutter','Productivity'],                year:'2022', desc:'File conversion utility app supporting PDF, Word, and image formats with a clean, drag-and-drop interface.',         img:'https://images.unsplash.com/photo-1618401479427-c8ef9465fbe1?w=700&q=80', url:'case-study.html' },
+          { id:9,  title:'SKS HRMS',                  category:'enterprise', categoryLabel:'Enterprise', tags:['Enterprise','Android','HRMS'],           year:'2022', desc:'HR management system for enterprise clients — covering attendance, payroll, and employee lifecycle management.',      img:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=700&q=80', url:'case-study.html' },
+          { id:10, title:'Volt Gaming',               category:'android',    categoryLabel:'Android',    tags:['Android','Gaming'],                      year:'2021', desc:'Mobile gaming companion app with live stats, tournament brackets, and team communication features.',               img:'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=700&q=80', url:'case-study.html' },
+          { id:11, title:'Sindh Flood Relief',        category:'android',    categoryLabel:'Android',    tags:['Android','Social'],                      year:'2022', desc:'Emergency relief coordination app connecting volunteers, donors, and affected communities during the 2022 floods.',  img:'https://images.unsplash.com/photo-1561484930-974b10b1a400?w=700&q=80', url:'case-study.html' },
+          { id:12, title:'Track & Traxe',             category:'android',    categoryLabel:'Android',    tags:['Android','Tracking','GPS'],              year:'2021', desc:'Real-time GPS tracking app for fleet management with geofencing alerts and route history.',                          img:'https://images.unsplash.com/photo-1601972599720-36938d4ecd31?w=700&q=80', url:'case-study.html' },
+          { id:13, title:'My Optix',                  category:'android',    categoryLabel:'Android',    tags:['Android','Healthcare'],                  year:'2020', desc:'Optician and eyewear management app for prescription tracking, appointment booking, and order history.',             img:'https://images.unsplash.com/photo-1574169208507-84376144848b?w=700&q=80', url:'case-study.html' },
+          { id:14, title:'My Water — Customer',       category:'android',    categoryLabel:'Android',    tags:['Android','Utility'],                     year:'2020', desc:'Customer-facing utility app for water service billing, consumption tracking, and maintenance requests.',           img:'https://images.unsplash.com/photo-1548438294-1ad5d5f4f063?w=700&q=80', url:'case-study.html' },
+          { id:15, title:'MyCart — E-commerce Suite', category:'ecommerce',  categoryLabel:'E-commerce', tags:['E-commerce','Android','Multi-app'],      year:'2019', desc:'Full e-commerce ecosystem: consumer app, inventory management, rider app, and employee portals — all in Android.',   img:'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=700&q=80', url:'case-study.html' },
+          { id:16, title:'My Water — Technician',    category:'android',    categoryLabel:'Android',    tags:['Android','Utility','Field Service'],     year:'2020', desc:'Field technician app for water service operations — job assignment, on-site status updates, and service history management.', img:'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=700&q=80', url:'case-study.html' },
+        ],
+        get visibleCount() {
+          if (this.filter === 'all') return this.allProjects.length;
+          return this.allProjects.filter(p => p.category === this.filter).length;
+        },
+        init() {
+          this.dark = localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          window.addEventListener('scroll', () => { this.scrolled = window.scrollY > 20; }, { passive: true });
+          this.$nextTick(() => {
+            const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+            document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+          });
+          document.getElementById('year').textContent = new Date().getFullYear();
+        }
+      }
+    }
+  </script>
+</body>
+</html>
