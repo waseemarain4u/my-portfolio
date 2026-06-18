@@ -15,6 +15,7 @@
     .btn-primary{position:relative;overflow:hidden;}.btn-primary::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s cubic-bezier(.4,0,.2,1);}.btn-primary:hover::after{left:160%;}
     .nav-link{position:relative;}.nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:currentColor;transition:width .25s cubic-bezier(.4,0,.2,1);}.nav-link:hover::after{width:100%;}
     ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:#2563EB;border-radius:99px;}
+    *, *::before, *::after { cursor: none !important; }
   </style>
   <script>
     (function(){
@@ -24,6 +25,7 @@
   </script>
 </head>
 <body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased min-h-screen flex flex-col">
+<canvas id="fluid-canvas"></canvas>
 
   <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5">
     <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -73,5 +75,7 @@
   </footer>
 
   <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+  <script src="fluid.js" defer></script>
+  <script src="cursor.js" defer></script>
 </body>
 </html>

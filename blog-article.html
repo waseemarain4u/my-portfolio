@@ -31,6 +31,7 @@
     .prose ul{list-style:disc;padding-left:1.5rem;color:rgb(113 113 122);margin-bottom:1.25rem;line-height:1.75;}
     .dark .prose ul{color:rgb(161 161 170);}
     #scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#2563EB,#3B82F6);z-index:9999;pointer-events:none;width:0;transition:width .08s linear}
+    *, *::before, *::after { cursor: none !important; }
   </style>
   <script>
     document.addEventListener('DOMContentLoaded',()=>{
@@ -43,6 +44,7 @@
   </script>
 </head>
 <body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
+<canvas id="fluid-canvas"></canvas>
 <div id="scroll-progress"></div>
 
   <header x-data="{mm:false}" class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5">
@@ -199,5 +201,7 @@
     </div>
   </footer>
 
+<script src="fluid.js" defer></script>
+  <script src="cursor.js" defer></script>
 </body>
 </html>
