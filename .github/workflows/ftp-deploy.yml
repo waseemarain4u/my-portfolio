@@ -2,7 +2,7 @@ name: Deploy to MySiteArea via FTP
 
 on:
   push:
-    branches: [main]
+    branches: [deploy]
   workflow_dispatch:
 
 jobs:
