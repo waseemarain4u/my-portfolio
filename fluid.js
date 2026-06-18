@@ -10,25 +10,34 @@ Adapted for portfolio use: blue/zinc theme, no GUI, dark-mode aware.
 const canvas = document.getElementById('fluid-canvas');
 if (!canvas) return;
 
+// Full-page fixed background — pointer-events:none so page content stays clickable
+canvas.style.position = 'fixed';
+canvas.style.top      = '0';
+canvas.style.left     = '0';
+canvas.style.width    = '100%';
+canvas.style.height   = '100%';
+canvas.style.zIndex   = '0';
+canvas.style.pointerEvents = 'none';
+
 resizeCanvas();
 
 let config = {
     SIM_RESOLUTION: 128,
     DYE_RESOLUTION: 1024,
     CAPTURE_RESOLUTION: 512,
-    DENSITY_DISSIPATION: 1.5,
-    VELOCITY_DISSIPATION: 0.35,
+    DENSITY_DISSIPATION: 2.5,
+    VELOCITY_DISSIPATION: 0.45,
     PRESSURE: 0.8,
     PRESSURE_ITERATIONS: 20,
     CURL: 22,
-    SPLAT_RADIUS: 0.22,
-    SPLAT_FORCE: 6000,
+    SPLAT_RADIUS: 0.20,
+    SPLAT_FORCE: 5000,
     SHADING: true,
     COLORFUL: false,
     COLOR_UPDATE_SPEED: 4,
     PAUSED: false,
-    BACK_COLOR: { r: 255, g: 255, b: 255 },
-    TRANSPARENT: false,
+    BACK_COLOR: { r: 0, g: 0, b: 0 },
+    TRANSPARENT: true,
     BLOOM: true,
     BLOOM_ITERATIONS: 8,
     BLOOM_RESOLUTION: 256,
@@ -70,7 +79,7 @@ if (!ext.supportLinearFiltering) {
 }
 
 function getWebGLContext (canvas) {
-    const params = { alpha: false, depth: false, stencil: false, antialias: false, preserveDrawingBuffer: false };
+    const params = { alpha: true, depth: false, stencil: false, antialias: false, preserveDrawingBuffer: false };
 
     let gl = canvas.getContext('webgl2', params);
     const isWebGL2 = !!gl;
@@ -1217,52 +1226,55 @@ function correctRadius (radius) {
     return radius;
 }
 
-// --- Input handlers (canvas-relative coordinates) ---
+// --- Input handlers (window-level; canvas has pointer-events:none) ---
 
-canvas.addEventListener('mousedown', e => {
-    let posX = scaleByPixelRatio(e.offsetX);
-    let posY = scaleByPixelRatio(e.offsetY);
-    let pointer = pointers.find(p => p.id == -1);
-    if (pointer == null) pointer = new pointerPrototype();
-    updatePointerDownData(pointer, -1, posX, posY);
-});
-
-canvas.addEventListener('mousemove', e => {
+// Hover creates fluid trails — no click required.
+window.addEventListener('mousemove', e => {
     let pointer = pointers[0];
-    if (!pointer.down) return;
-    let posX = scaleByPixelRatio(e.offsetX);
-    let posY = scaleByPixelRatio(e.offsetY);
+    let posX = scaleByPixelRatio(e.clientX);
+    let posY = scaleByPixelRatio(e.clientY);
+    if (pointer.id === -1) {
+        // First event — seed position silently to avoid a jolt splat.
+        pointer.texcoordX     = posX / canvas.width;
+        pointer.texcoordY     = 1.0 - posY / canvas.height;
+        pointer.prevTexcoordX = pointer.texcoordX;
+        pointer.prevTexcoordY = pointer.texcoordY;
+        pointer.deltaX = 0;
+        pointer.deltaY = 0;
+        pointer.color  = generateColor();
+        pointer.id     = 0;
+        pointer.down   = true;
+        return;
+    }
+    pointer.down = true;
     updatePointerMoveData(pointer, posX, posY);
 });
 
-window.addEventListener('mouseup', () => {
-    updatePointerUpData(pointers[0]);
+window.addEventListener('mouseleave', () => {
+    pointers[0].down = false;
+    pointers[0].id   = -1;
 });
 
-canvas.addEventListener('touchstart', e => {
-    e.preventDefault();
+window.addEventListener('touchstart', e => {
     const touches = e.targetTouches;
-    const rect = canvas.getBoundingClientRect();
     while (touches.length >= pointers.length) pointers.push(new pointerPrototype());
     for (let i = 0; i < touches.length; i++) {
-        let posX = scaleByPixelRatio(touches[i].clientX - rect.left);
-        let posY = scaleByPixelRatio(touches[i].clientY - rect.top);
+        let posX = scaleByPixelRatio(touches[i].clientX);
+        let posY = scaleByPixelRatio(touches[i].clientY);
         updatePointerDownData(pointers[i + 1], touches[i].identifier, posX, posY);
     }
-}, { passive: false });
+}, { passive: true });
 
-canvas.addEventListener('touchmove', e => {
-    e.preventDefault();
+window.addEventListener('touchmove', e => {
     const touches = e.targetTouches;
-    const rect = canvas.getBoundingClientRect();
     for (let i = 0; i < touches.length; i++) {
         let pointer = pointers[i + 1];
         if (!pointer.down) continue;
-        let posX = scaleByPixelRatio(touches[i].clientX - rect.left);
-        let posY = scaleByPixelRatio(touches[i].clientY - rect.top);
+        let posX = scaleByPixelRatio(touches[i].clientX);
+        let posY = scaleByPixelRatio(touches[i].clientY);
         updatePointerMoveData(pointer, posX, posY);
     }
-}, { passive: false });
+}, { passive: true });
 
 window.addEventListener('touchend', e => {
     const touches = e.changedTouches;
