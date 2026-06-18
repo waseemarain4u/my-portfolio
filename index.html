@@ -52,6 +52,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .reveal-scale{opacity:0;transform:scale(.94);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1)}
 .reveal-scale.visible{opacity:1;transform:none}
 .d5{transition-delay:.4s}
+#fluid-canvas{display:block;touch-action:none}
 </style>
 </head>
 <body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
@@ -108,8 +109,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 
 <!-- HERO -->
 <section id="hero" class="relative pt-16 overflow-hidden">
-  <div class="absolute top-1/4 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
-  <div class="absolute bottom-1/4 left-0 w-64 h-64 bg-zinc-200/50 dark:bg-zinc-800/30 rounded-full blur-3xl pointer-events-none"></div>
+  <canvas id="fluid-canvas" class="absolute inset-0 w-full h-full" style="z-index:1"></canvas>
   <div class="relative z-10 max-w-6xl mx-auto px-6 py-24 w-full">
     <div class="grid md:grid-cols-2 gap-12 items-center">
       <!-- Left: text -->
@@ -508,6 +508,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
   </div>
 </footer>
 
+<script src="fluid.js" defer></script>
 <script>
 function app() {
   return {
