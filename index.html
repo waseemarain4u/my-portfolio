@@ -512,6 +512,16 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 <script src="fluid.js" defer></script>
 <script src="cursor.js" defer></script>
 <script>
+(function(){
+  const revealEls = document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.05, rootMargin: '0px 0px 200px 0px' });
+    revealEls.forEach(el => io.observe(el));
+  }
+  setTimeout(() => revealEls.forEach(el => el.classList.add('visible')), 300);
+})();
 function app() {
   return {
     dark: false, mm: false, sc: false, s: 'hero',
@@ -525,12 +535,6 @@ function app() {
         this.updateSection();
         prog.style.width = (window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
       }, { passive: true });
-      const revealEls = document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale');
-      const io = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
-      }, { threshold: 0.05, rootMargin: '0px 0px 60px 0px' });
-      revealEls.forEach(el => io.observe(el));
-      setTimeout(() => revealEls.forEach(el => el.classList.add('visible')), 1200);
       const co = new IntersectionObserver(entries => {
         entries.forEach(e => {
           if (!e.isIntersecting) return;

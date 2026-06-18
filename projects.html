@@ -198,17 +198,21 @@
             this.scrolled = window.scrollY > 20;
             prog.style.width = (window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
           }, { passive: true });
-          this.$nextTick(() => {
-            const revealEls = document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale');
-            const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, { threshold: 0.05, rootMargin: '0px 0px 60px 0px' });
-            revealEls.forEach(el => obs.observe(el));
-            setTimeout(() => revealEls.forEach(el => el.classList.add('visible')), 1200);
-          });
           document.getElementById('yr').textContent = new Date().getFullYear();
         }
       }
     }
   </script>
+<script>
+(function(){
+  const revealEls = document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale');
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, { threshold: 0.05, rootMargin: '0px 0px 200px 0px' });
+    revealEls.forEach(el => obs.observe(el));
+  }
+  setTimeout(() => revealEls.forEach(el => el.classList.add('visible')), 300);
+})();
+</script>
 <script src="fluid.js" defer></script>
 <script src="cursor.js" defer></script>
 </body>

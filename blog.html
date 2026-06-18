@@ -38,9 +38,9 @@
       const s=localStorage.getItem('theme');
       if(s==='dark'||(s===null&&window.matchMedia('(prefers-color-scheme:dark)').matches)){d.classList.add('dark');}
       const revealEls=document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale');
-      const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.05,rootMargin:'0px 0px 60px 0px'});
+      const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.05,rootMargin:'0px 0px 200px 0px'});
       revealEls.forEach(el=>obs.observe(el));
-      setTimeout(()=>revealEls.forEach(el=>el.classList.add('visible')),1200);
+      setTimeout(()=>revealEls.forEach(el=>el.classList.add('visible')),300);
       const prog=document.getElementById('scroll-progress');
       window.addEventListener('scroll',()=>{prog.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';},{passive:true});
       document.getElementById('yr').textContent=new Date().getFullYear();
