@@ -23,15 +23,15 @@ resizeCanvas();
 
 let config = {
     SIM_RESOLUTION: 128,
-    DYE_RESOLUTION: 1024,
+    DYE_RESOLUTION: 512,
     CAPTURE_RESOLUTION: 512,
-    DENSITY_DISSIPATION: 2.5,
-    VELOCITY_DISSIPATION: 0.45,
-    PRESSURE: 0.8,
+    DENSITY_DISSIPATION: 4.0,
+    VELOCITY_DISSIPATION: 1.2,
+    PRESSURE: 0.6,
     PRESSURE_ITERATIONS: 20,
-    CURL: 22,
-    SPLAT_RADIUS: 0.20,
-    SPLAT_FORCE: 5000,
+    CURL: 14,
+    SPLAT_RADIUS: 0.18,
+    SPLAT_FORCE: 3000,
     SHADING: true,
     COLORFUL: false,
     COLOR_UPDATE_SPEED: 4,
@@ -39,14 +39,14 @@ let config = {
     BACK_COLOR: { r: 0, g: 0, b: 0 },
     TRANSPARENT: true,
     BLOOM: true,
-    BLOOM_ITERATIONS: 8,
-    BLOOM_RESOLUTION: 256,
-    BLOOM_INTENSITY: 0.45,
-    BLOOM_THRESHOLD: 0.6,
+    BLOOM_ITERATIONS: 4,
+    BLOOM_RESOLUTION: 128,
+    BLOOM_INTENSITY: 0.12,
+    BLOOM_THRESHOLD: 0.7,
     BLOOM_SOFT_KNEE: 0.7,
-    SUNRAYS: true,
+    SUNRAYS: false,
     SUNRAYS_RESOLUTION: 196,
-    SUNRAYS_WEIGHT: 1.0,
+    SUNRAYS_WEIGHT: 0.3,
 };
 
 function pointerPrototype () {
@@ -945,12 +945,12 @@ syncBackground();
 const darkModeObserver = new MutationObserver(syncBackground);
 darkModeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
-multipleSplats(parseInt(Math.random() * 8) + 5);
+multipleSplats(parseInt(Math.random() * 2) + 2);
 
 // Auto-splat periodically to keep fluid alive
 setInterval(() => {
-    if (!config.PAUSED) splatStack.push(parseInt(Math.random() * 2) + 1);
-}, 4000);
+    if (!config.PAUSED) splatStack.push(1);
+}, 9000);
 
 // Pause when hero is off-screen to save GPU
 const visibilityObserver = new IntersectionObserver(entries => {
@@ -1335,10 +1335,10 @@ function generateColor () {
     } else {
         h = (248 + Math.random() * 22) / 360; // indigo-violet 248-270°
     }
-    const c = HSVtoRGB(h, 0.80 + Math.random() * 0.20, 0.90 + Math.random() * 0.10);
-    c.r *= 0.15;
-    c.g *= 0.15;
-    c.b *= 0.15;
+    const c = HSVtoRGB(h, 0.50 + Math.random() * 0.20, 0.70 + Math.random() * 0.10);
+    c.r *= 0.07;
+    c.g *= 0.07;
+    c.b *= 0.07;
     return c;
 }
 
