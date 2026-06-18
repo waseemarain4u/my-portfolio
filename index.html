@@ -41,7 +41,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .nl{position:relative}.nl::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:currentColor;transition:width .22s cubic-bezier(.4,0,.2,1)}.nl:hover::after,.nl.on::after{width:100%}.nl.on{font-weight:500}
 .shimmer{position:relative;overflow:hidden}.shimmer::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s cubic-bezier(.4,0,.2,1)}.shimmer:hover::after{left:160%}
 .pf{overflow:hidden;background:#d4d4d8}.pf img{width:100%;height:100%;object-fit:cover;display:block}
-.card-h{transition:transform .28s cubic-bezier(.4,0,.2,1),border-color .18s}.card-h:hover{transform:translateY(-4px)}
+.card-h{transition:transform .28s cubic-bezier(.4,0,.2,1),border-color .18s;background-image:radial-gradient(350px circle at var(--mx,-9999px) var(--my,-9999px),rgba(37,99,235,.11),transparent 55%)}.card-h:hover{transform:translateY(-4px)}
 .stag{transition:border-color .18s}
 [x-cloak]{display:none!important}
 #scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#2563EB,#3B82F6);z-index:9999;pointer-events:none;width:0;transition:width .08s linear}
