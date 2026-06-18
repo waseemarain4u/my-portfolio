@@ -32,13 +32,10 @@
     *, *::before, *::after { cursor: none !important; }
   </style>
   <script>
-    document.addEventListener('DOMContentLoaded',()=>{
-      const d=document.documentElement;
+    (function(){
       const s=localStorage.getItem('theme');
-      if(s==='dark'||(s===null&&window.matchMedia('(prefers-color-scheme:dark)').matches)){d.classList.add('dark');}
-      document.getElementById('yr').textContent=new Date().getFullYear();
-      const prog=document.getElementById('scroll-progress');window.addEventListener('scroll',()=>{prog.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';},{passive:true});
-    });
+      if(s==='dark'||(s===null&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark');}
+    })();
   </script>
 </head>
 <body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
@@ -172,6 +169,13 @@
     </div>
   </footer>
 
+<script>
+(function(){
+  document.getElementById('yr').textContent=new Date().getFullYear();
+  const prog=document.getElementById('scroll-progress');
+  if(prog) window.addEventListener('scroll',()=>{prog.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';},{passive:true});
+})();
+</script>
 <script src="fluid.js" defer></script>
   <script src="cursor.js" defer></script>
 </body>
