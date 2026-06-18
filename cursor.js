@@ -109,13 +109,29 @@
     });
   }
 
+  function bindCardGlow() {
+    document.querySelectorAll('.card-h, .project-card').forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
+        var rect = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+      });
+      card.addEventListener('mouseleave', function () {
+        card.style.removeProperty('--mx');
+        card.style.removeProperty('--my');
+      });
+    });
+  }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () {
       createCursor();
       bindHovers();
+      bindCardGlow();
     });
   } else {
     createCursor();
     bindHovers();
+    bindCardGlow();
   }
 })();
