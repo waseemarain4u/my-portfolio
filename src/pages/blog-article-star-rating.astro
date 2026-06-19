@@ -1,0 +1,76 @@
+---
+import BlogPostLayout from '../layouts/BlogPostLayout.astro';
+const base = import.meta.env.BASE_URL;
+---
+
+<BlogPostLayout
+  title="Building a Custom Interactive Star Rating Widget in Flutter"
+  description="A step-by-step guide to building a fully interactive, gesture-driven star rating widget from scratch — no packages required."
+  canonicalUrl="https://waseemarain4u.github.io/my-portfolio/blog-article-star-rating"
+  ogImage="https://images.unsplash.com/photo-1618477388954-7852f32655ec?w=1200&q=80"
+  tag="Flutter"
+  date="Aug 12, 2023"
+  readTime="5 min read"
+  mediumUrl="https://medium.com/@waseemarain_98671/building-a-custom-interactive-star-rating-widget-in-flutter-31c7ed9fb261"
+>
+  <p>Flutter's widget ecosystem is rich, but there are moments where building from scratch teaches you far more than dropping in a package. The star rating widget is a perfect exercise — it involves custom painting, gesture detection, and state management all in one compact component.</p>
+
+  <h2>Why build it yourself?</h2>
+  <p>There are plenty of star rating packages on pub.dev. But building your own gives you complete control over the visual design, interaction behaviour, half-star support, animation, and accessibility. More importantly, it forces you to understand Flutter's gesture system and custom painting pipeline — knowledge that pays dividends across many other custom widgets.</p>
+
+  <h2>The core approach: GestureDetector + CustomPaint</h2>
+  <p>The widget is built around two Flutter primitives. <code>GestureDetector</code> captures horizontal drag gestures to update the rating in real-time as the user drags across the stars. <code>CustomPaint</code> draws the stars precisely, filling them based on the current value.</p>
+  <pre>class StarRating extends StatefulWidget {'{'}
+  final double initialRating;
+  final int starCount;
+  final ValueChanged&lt;double&gt; onRatingChanged;
+
+  const StarRating({'{'}
+    super.key,
+    this.initialRating = 0,
+    this.starCount = 5,
+    required this.onRatingChanged,
+  {'}'});
+{'}'}</pre>
+  <p>Keeping the widget stateful internally while exposing the value through a callback keeps the API clean — the parent decides what to do with the rating, and the widget manages its own visual state.</p>
+
+  <h2>Handling gestures for a smooth experience</h2>
+  <p>The key to a satisfying drag interaction is converting the horizontal position of the user's finger into a rating value. You calculate the rating by dividing the drag offset by the total widget width, then clamping it between 0 and the maximum star count. Rounding to the nearest 0.5 gives you half-star precision.</p>
+  <pre>double _calculateRating(double localX, double totalWidth) {'{'}
+  final raw = (localX / totalWidth) * widget.starCount;
+  // Round to nearest half
+  return (raw * 2).round() / 2.0.clamp(0, widget.starCount.toDouble());
+{'}'}</pre>
+  <p>Wiring this to both <code>onHorizontalDragUpdate</code> and <code>onTapDown</code> means the widget responds correctly to both taps and drags.</p>
+
+  <h2>Drawing the stars with CustomPainter</h2>
+  <p>The <code>StarPainter</code> class uses a <code>Path</code> to trace a five-pointed star polygon for each position. For filled stars it uses the accent colour; for empty stars it uses a muted stroke. For partially filled stars — the half-star case — it uses a <code>clipRect</code> to paint the filled version up to the fractional point, then the empty version for the remainder.</p>
+  <p>The result is a smooth, pixel-perfect rating widget that matches your app's design language exactly, responds to gestures naturally, and works on every Flutter platform without any external dependency.</p>
+
+  <h2>Adding animation</h2>
+  <p>Wrapping each star's scale in an <code>AnimationController</code> driven by the current rating adds a satisfying pop when a star becomes selected. Keep it subtle — a scale from 1.0 to 1.2 and back over 150ms is enough to feel responsive without being distracting.</p>
+  <p>The full implementation is available on Medium with complete source code. The entire widget comes in under 150 lines of Dart.</p>
+
+  <div slot="more-articles">
+    <section class="bg-zinc-50 dark:bg-zinc-900/40 py-16">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="font-display font-bold text-2xl text-zinc-900 dark:text-white mb-8">More articles</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          {[
+            { href: 'blog-article', img: 'https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=700&q=80', alt: 'Clean Architecture', date: 'May 10, 2025', title: 'Why I switched from MVC to Clean Architecture in Flutter' },
+            { href: 'blog-article-performance', img: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&q=80', alt: 'Performance', date: 'Dec 2, 2024', title: "5 Flutter performance mistakes I made so you don't have to" },
+            { href: 'blog-article-bloc', img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=700&q=80', alt: 'State management', date: 'Feb 18, 2025', title: 'BLoC, Riverpod, or Provider? My honest take after 4 years' },
+          ].map(p => (
+            <article class="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-all hover:-translate-y-1">
+              <div class="pf w-full h-40"><img src={p.img} alt={p.alt} loading="lazy"></div>
+              <div class="p-5">
+                <p class="text-xs text-zinc-400 mb-2">{p.date}</p>
+                <a href={`${base}${p.href}`}><h3 class="font-display font-bold text-base text-zinc-900 dark:text-white group-hover:text-accent transition-colors">{p.title}</h3></a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  </div>
+</BlogPostLayout>

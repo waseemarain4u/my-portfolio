@@ -1,0 +1,58 @@
+---
+import BlogPostLayout from '../layouts/BlogPostLayout.astro';
+const base = import.meta.env.BASE_URL;
+---
+
+<BlogPostLayout
+  title="Kotlin vs Java in 2025: when to still choose Java"
+  description="Kotlin is the default, but there are still real-world situations where Java makes more sense for your Android project."
+  canonicalUrl="https://waseemarain4u.github.io/my-portfolio/blog-article-kotlin"
+  ogImage="https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=1200&q=80"
+  tag="Android"
+  date="Apr 3, 2025"
+  readTime="6 min read"
+>
+  <p>Every Android developer today defaults to Kotlin — and for most projects, that's the right call. But after 10+ years of Android development, I've seen enough codebases to know that Java still earns its place in specific situations.</p>
+
+  <h2>Why Kotlin won</h2>
+  <p>Kotlin's coroutines, null safety, extension functions, and concise syntax make it genuinely better for most modern Android work. Google endorsed it in 2017, and by 2019 it became the preferred language for Android. If you're starting a new project today, Kotlin is the obvious choice.</p>
+
+  <h2>When Java still makes sense</h2>
+  <p>Here are the real scenarios where I've reached for Java in recent years:</p>
+  <ul>
+    <li><strong>Existing Java codebases:</strong> Migrating a 100k-line Java codebase to Kotlin incrementally is possible, but risky without a clear plan. Sometimes maintaining Java consistency is more pragmatic than a partial migration.</li>
+    <li><strong>Library development:</strong> If you're writing a library that needs to be consumed by both Java and Kotlin callers, pure Java avoids the interop friction entirely.</li>
+    <li><strong>Team familiarity:</strong> A team that deeply knows Java and is new to Android will ship faster in Java — at least initially. Architecture matters more than language in the short term.</li>
+    <li><strong>Performance-critical native code:</strong> For JNI-heavy components, Java's simpler memory model can sometimes be easier to reason about.</li>
+  </ul>
+
+  <h2>The interop reality</h2>
+  <p>Kotlin and Java interop is excellent — you can call Java from Kotlin and vice versa in the same module. But interop isn't free. Nullability annotations, SAM conversions, and property access syntax all need attention. In a pure-Java module consumed by Kotlin, you'll want to annotate everything with <code>@NonNull</code> and <code>@Nullable</code> to get proper null safety on the Kotlin side.</p>
+
+  <h2>My actual recommendation</h2>
+  <p>New project? Kotlin, no question. Existing Java project? Migrate new features to Kotlin, leave stable old code alone. Mixed team with Java seniors? Start with Kotlin for new modules and invest in upskilling — the productivity gains compound quickly once the team is comfortable.</p>
+  <p>The language debate matters less than most developers think. Clean architecture, good testing habits, and maintainable code are language-agnostic.</p>
+
+  <div slot="more-articles">
+    <section class="bg-zinc-50 dark:bg-zinc-900/40 py-16">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="font-display font-bold text-2xl text-zinc-900 dark:text-white mb-8">More articles</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          {[
+            { href: 'blog-article', img: 'https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=700&q=80', alt: 'Clean Architecture', date: 'May 10, 2025', title: 'Why I switched from MVC to Clean Architecture in Flutter' },
+            { href: 'blog-article-performance', img: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&q=80', alt: 'Performance', date: 'Dec 2, 2024', title: "5 Flutter performance mistakes I made so you don't have to" },
+            { href: 'blog-article-bloc', img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=700&q=80', alt: 'State management', date: 'Feb 18, 2025', title: 'BLoC, Riverpod, or Provider? My honest take after 4 years' },
+          ].map(p => (
+            <article class="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-all hover:-translate-y-1">
+              <div class="pf w-full h-40"><img src={p.img} alt={p.alt} loading="lazy"></div>
+              <div class="p-5">
+                <p class="text-xs text-zinc-400 mb-2">{p.date}</p>
+                <a href={`${base}${p.href}`}><h3 class="font-display font-bold text-base text-zinc-900 dark:text-white group-hover:text-accent transition-colors">{p.title}</h3></a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  </div>
+</BlogPostLayout>
