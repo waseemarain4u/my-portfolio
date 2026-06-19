@@ -1,0 +1,42 @@
+---
+import BlogPostLayout from '../layouts/BlogPostLayout.astro';
+import MoreArticles from '../components/MoreArticles.astro';
+---
+
+<BlogPostLayout
+  title="BLoC, Riverpod, or Provider? My honest take after 4 years"
+  description="I've shipped Flutter apps with all three. Here's when each one is actually the right choice — no hype, just experience."
+  canonicalUrl="https://waseemarain4u.github.io/my-portfolio/blog-article-bloc"
+  ogImage="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&q=80"
+  tag="Flutter"
+  date="Feb 18, 2025"
+  readTime="8 min read"
+>
+  <p>State management is the most debated topic in Flutter. I've used Provider, BLoC, and Riverpod across production apps at Cronysoft and Codelabs — and I have strong opinions about when each one earns its place.</p>
+
+  <h2>Provider — the gateway drug</h2>
+  <p>Provider is where most Flutter developers start, and it's genuinely good for simple apps. It's lightweight, easy to understand, and works well when your state tree is shallow. I still reach for Provider in small internal tools or prototypes where I want to move fast.</p>
+  <p>The problem is it doesn't scale. As soon as you have deeply nested state, complex async flows, or multiple features sharing state, Provider's simplicity becomes a limitation. You end up with ChangeNotifiers that know too much, and testing becomes painful.</p>
+
+  <h2>BLoC — the enterprise workhorse</h2>
+  <p>BLoC (Business Logic Component) is my default for production apps. The explicit separation of Events → BLoC → States makes the data flow completely predictable. Every state transition is traceable. Testing is straightforward — you mock inputs, assert outputs, no widget tree required.</p>
+  <pre>// Clean, testable, predictable
+bloc.add(LoadUserEvent(userId: '123'));
+expectLater(bloc.stream, emits(UserLoadedState(user: mockUser)));</pre>
+  <p>The downside is boilerplate. A simple feature requires an event class, a state class, and a BLoC class before you write a single line of business logic. For small features, this feels like overkill. My rule: if a feature will be tested, use BLoC. If it's a one-screen prototype, don't.</p>
+
+  <h2>Riverpod — the modern challenger</h2>
+  <p>Riverpod solves real problems that Provider has — compile-time safety, no BuildContext dependency for providers, and better support for async state. The <code>AsyncNotifier</code> pattern is particularly elegant for data fetching.</p>
+  <p>I've used Riverpod on two projects and the developer experience is excellent. The code generation with <code>riverpod_generator</code> removes most of the boilerplate. My hesitation is the learning curve for teams — the provider/consumer mental model is less intuitive than BLoC's event-driven approach for developers coming from other backgrounds.</p>
+
+  <h2>My honest recommendation</h2>
+  <p>For a team app that will be maintained and tested: <strong>BLoC</strong>. The explicitness is a feature, not a bug. New developers can trace every state change without understanding the whole codebase.</p>
+  <p>For a solo project or startup MVP where you want to ship fast: <strong>Riverpod</strong>. It's genuinely more ergonomic once you're past the learning curve.</p>
+  <p>For a small internal tool or proof of concept: <strong>Provider</strong>. Don't over-engineer it.</p>
+
+  <MoreArticles slot="more-articles" articles={[
+    { href: 'blog-article', img: 'https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=700&q=80', alt: 'Clean Architecture', date: 'May 10, 2025', title: 'Why I switched from MVC to Clean Architecture in Flutter' },
+    { href: 'blog-article-performance', img: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&q=80', alt: 'Performance', date: 'Dec 2, 2024', title: "5 Flutter performance mistakes I made so you don't have to" },
+    { href: 'blog-article-kotlin', img: 'https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=700&q=80', alt: 'Kotlin', date: 'Apr 3, 2025', title: 'Kotlin vs Java in 2025: when to still choose Java' },
+  ]} />
+</BlogPostLayout>

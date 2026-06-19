@@ -1,0 +1,64 @@
+---
+import '../styles/global.css';
+import NavHome from '../components/NavHome.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalUrl?: string;
+  ogImage?: string;
+}
+const { title, description, canonicalUrl, ogImage } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" x-data="app()" :class="{'dark':dark}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content={description}>
+  <meta name="author" content="Waseem Akram">
+  <meta property="og:type" content="website">
+  {canonicalUrl && <meta property="og:url" content={canonicalUrl}>}
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  {ogImage && <meta property="og:image" content={ogImage}>}
+  {canonicalUrl && <link rel="canonical" href={canonicalUrl}>}
+  <title>{title}</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
+</head>
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
+  <NavHome />
+  <slot />
+  <Footer />
+  <script is:inline>
+  function app() {
+    return {
+      dark: false, mm: false, sc: false, s: 'hero',
+      init() {
+        this.dark = localStorage.getItem('theme') === 'dark' ||
+          (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        this.$watch('dark', v => localStorage.setItem('theme', v ? 'dark' : 'light'));
+        window.addEventListener('scroll', () => {
+          this.sc = window.scrollY > 20;
+          this.updateSection();
+        }, { passive: true });
+      },
+      updateSection() {
+        const atBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 60;
+        if (atBottom) { this.s = 'contact'; return; }
+        const ids = ['contact','experience','about','blog','work','services','hero'];
+        for (const id of ids) {
+          const el = document.getElementById(id);
+          if (el && window.scrollY >= el.offsetTop - 130) { this.s = id; return; }
+        }
+      }
+    }
+  }
+  </script>
+</body>
+</html>

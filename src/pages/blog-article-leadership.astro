@@ -1,0 +1,37 @@
+---
+import BlogPostLayout from '../layouts/BlogPostLayout.astro';
+import MoreArticles from '../components/MoreArticles.astro';
+---
+
+<BlogPostLayout
+  title="What no one told me about leading a mobile dev team"
+  description="Technical skill gets you to senior. These things get you to lead. Lessons from running teams across three different companies."
+  canonicalUrl="https://waseemarain4u.github.io/my-portfolio/blog-article-leadership"
+  ogImage="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80"
+  tag="Leadership"
+  date="Jan 7, 2025"
+  readTime="7 min read"
+>
+  <p>I became a lead developer for the first time at Codelabs in 2020. I was a strong engineer — I knew Android deeply, I'd shipped dozens of apps, and I was the go-to person for hard technical problems. I assumed leadership would be a natural extension of that. I was wrong.</p>
+
+  <h2>Technical skill is table stakes</h2>
+  <p>Being the best coder on the team means very little once you're the lead. Your job is to make the whole team productive, not to be the one writing the best code. The developers I've seen struggle most in lead roles are the ones who can't let go of being the implementer. They become a bottleneck — every PR goes through them, every architecture decision waits for them, every junior developer is blocked until they have time.</p>
+  <p>The shift I had to make: my output is no longer code, it's team throughput. A week where I wrote almost no code but unblocked three developers, clarified requirements so a feature could be built right the first time, and ran a session that helped two junior developers level up — that's a better week than one where I personally shipped a complex feature.</p>
+
+  <h2>Communication is the actual job</h2>
+  <p>Half my time as a lead is communication — stakeholders, product managers, designers, and the developers on the team. The technical translation layer between product and engineering is something no one teaches you. Learning to ask the right questions in a requirements meeting, to push back on scope in a way that doesn't create conflict, and to explain technical constraints to non-technical stakeholders without condescension — these are skills that take years to develop.</p>
+
+  <h2>How to actually mentor</h2>
+  <p>Early in my lead role I confused mentoring with code review. I'd give detailed feedback on PRs, explain the right patterns, and consider the job done. What I learned over time: the best mentoring happens in conversation, not in comments. A 15-minute pairing session where I let the junior developer drive and only asked questions — "what do you think this function should return?", "how would we test this?" — taught them more than three rounds of PR feedback.</p>
+  <p>The goal of mentoring is to make yourself unnecessary. If the team depends on me to make every decision, I've failed. The measure of good mentoring is how well the team functions when I'm not there.</p>
+
+  <h2>Protect the team's time</h2>
+  <p>One of the most valuable things a lead can do is run interference — absorbing meetings, emails, and interruptions that would otherwise fragment the team's deep work time. Engineers need long uninterrupted blocks to do their best work. A 30-minute meeting in the middle of the morning doesn't cost 30 minutes — it costs the whole morning's focus.</p>
+  <p>Three years into leading teams, the thing I wish someone had told me on day one: your job is to remove obstacles, not to be the obstacle.</p>
+
+  <MoreArticles slot="more-articles" articles={[
+    { href: 'blog-article', img: 'https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=700&q=80', alt: 'Clean Architecture', date: 'May 10, 2025', title: 'Why I switched from MVC to Clean Architecture in Flutter' },
+    { href: 'blog-article-performance', img: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&q=80', alt: 'Performance', date: 'Dec 2, 2024', title: "5 Flutter performance mistakes I made so you don't have to" },
+    { href: 'blog-article-bloc', img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=700&q=80', alt: 'State management', date: 'Feb 18, 2025', title: 'BLoC, Riverpod, or Provider? My honest take after 4 years' },
+  ]} />
+</BlogPostLayout>

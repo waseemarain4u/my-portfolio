@@ -1,0 +1,51 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+type Page = 'blog' | 'projects' | 'article';
+interface Props {
+  title: string;
+  description: string;
+  canonicalUrl?: string;
+  ogImage?: string;
+  ogType?: string;
+  page?: Page;
+}
+const { title, description, canonicalUrl, ogImage, ogType = 'website', page = 'article' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content={description}>
+  <meta name="author" content="Waseem Akram">
+  <meta property="og:type" content={ogType}>
+  {canonicalUrl && <meta property="og:url" content={canonicalUrl}>}
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  {ogImage && <meta property="og:image" content={ogImage}>}
+  {canonicalUrl && <link rel="canonical" href={canonicalUrl}>}
+  <title>{title}</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
+  <!-- Prevent dark mode flash on load -->
+  <script is:inline>
+    (function(){
+      const s = localStorage.getItem('theme');
+      if (s === 'dark' || (!s && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+</head>
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
+  <Nav page={page} />
+  <slot />
+  <Footer />
+</body>
+</html>

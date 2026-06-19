@@ -1,0 +1,49 @@
+---
+import BlogPostLayout from '../layouts/BlogPostLayout.astro';
+import MoreArticles from '../components/MoreArticles.astro';
+---
+
+<BlogPostLayout
+  title="Why I switched from MVC to Clean Architecture in Flutter"
+  description="After shipping 5 apps with traditional MVC, here's what finally pushed me to restructure everything — and why my team will never go back."
+  canonicalUrl="https://waseemarain4u.github.io/my-portfolio/blog-article"
+  ogImage="https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=1200&q=80"
+  tag="Flutter"
+  date="May 10, 2025"
+  readTime="7 min read"
+>
+  <p>I've been building Android and Flutter apps since 2013. For most of that career, MVC was good enough. Widget trees held UI logic. Services held business logic. Controllers were the glue. It worked — until the apps got big, the teams got bigger, and the requirement changes started coming daily.</p>
+
+  <h2>The breaking point</h2>
+  <p>It was the MyCart project that broke me. We had an e-commerce consumer app, an inventory system, a rider app, and an employee portal — four separate apps sharing a good chunk of business logic. Every time a pricing rule changed, we were hunting through four codebases making the same edit in four different places. Tests were nearly impossible because the data layer was mixed directly into our widgets.</p>
+  <p>That's when I started seriously reading about Clean Architecture as applied to Flutter — and specifically about separating the codebase into three distinct layers: Data, Domain, and Presentation.</p>
+
+  <h2>The three-layer model</h2>
+  <p>The core idea is that each layer has one job and communicates with its neighbors only through defined interfaces (abstract classes in Dart). Here's the structure I settled on:</p>
+  <pre>lib/
+  core/           # Shared utilities, error handling
+  features/
+    auth/
+      data/       # Repositories impl, data sources, models
+      domain/     # Entities, repository interfaces, use cases
+      presentation/ # BLoC/Cubit, screens, widgets</pre>
+  <p>The Domain layer is the heart. It contains no Flutter dependencies — just pure Dart. Your entities, your repository interfaces, your use cases. This means you can unit test all your business logic without spinning up any widgets or mocking Firebase.</p>
+
+  <h2>What changed for my team</h2>
+  <p>The first thing I noticed after the switch was that junior developers could work on features in parallel without stepping on each other. One person handles the API integration in the Data layer. Another writes the use cases in Domain. A third builds the UI. All three are working on the same feature simultaneously without merge conflicts.</p>
+  <p>The second thing was testability. Writing a test for a use case is trivial — you mock the repository interface, pass in inputs, assert outputs. No widget trees. No Firebase. Just Dart.</p>
+
+  <h2>The honest downsides</h2>
+  <p>It's more boilerplate. A simple feature that used to be one file is now spread across several. For a solo developer building a small prototype, Clean Architecture is overkill. But for anything that will grow, be maintained, or be worked on by more than one person — it pays for itself within the first month.</p>
+  <p>The pattern requires buy-in from the whole team. If one developer decides to skip the domain layer and call the API directly from a widget, the architecture breaks down fast. I've learned to enforce this through code reviews and a short onboarding session for every new team member.</p>
+
+  <h2>Where to start</h2>
+  <p>If you're refactoring an existing app, don't try to do it all at once. Pick one feature — ideally a self-contained one — and migrate it to Clean Architecture. Get the team comfortable with the pattern. Then expand feature by feature. Trying to refactor everything in one sprint is a recipe for a broken app and a frustrated team.</p>
+  <p>Ten years of mobile development taught me that architecture decisions compound. A clean codebase makes every future feature cheaper. A messy one makes every future feature more expensive. Choose accordingly.</p>
+
+  <MoreArticles slot="more-articles" articles={[
+    { href: 'blog-article-kotlin', img: 'https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=700&q=80', alt: 'Kotlin', date: 'Apr 3, 2025', title: 'Kotlin vs Java in 2025: when to still choose Java' },
+    { href: 'blog-article-bloc', img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=700&q=80', alt: 'State management', date: 'Feb 18, 2025', title: 'BLoC, Riverpod, or Provider? My honest take after 4 years' },
+    { href: 'blog-article-performance', img: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&q=80', alt: 'Performance', date: 'Dec 2, 2024', title: "5 Flutter performance mistakes I made so you don't have to" },
+  ]} />
+</BlogPostLayout>

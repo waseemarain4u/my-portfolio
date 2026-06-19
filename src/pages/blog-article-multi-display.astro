@@ -1,0 +1,57 @@
+---
+import BlogPostLayout from '../layouts/BlogPostLayout.astro';
+import MoreArticles from '../components/MoreArticles.astro';
+---
+
+<BlogPostLayout
+  title="Multi-Display Magic in Android: Sending Messages to a Second Screen"
+  description="Android's multi-display API is underused and underrated. Here's how to launch activities on a secondary display and communicate between them."
+  canonicalUrl="https://waseemarain4u.github.io/my-portfolio/blog-article-multi-display"
+  ogImage="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=1200&q=80"
+  tag="Android"
+  date="Sep 5, 2023"
+  readTime="6 min read"
+  mediumUrl="https://medium.com/@waseemarain_98671/multi-display-magic-in-android-sending-messages-to-a-second-screen-cd8225a9f3db"
+>
+  <p>Most Android developers never think about secondary displays. But if you've ever worked on retail kiosks, digital signage, presentation apps, or Android Automotive, you've already needed this. Android's multi-display support has been production-ready since API 26, and the API is simpler than most people expect.</p>
+
+  <h2>When does this matter?</h2>
+  <p>The use cases are more common than they appear. A point-of-sale system where the cashier sees an order management screen and the customer faces a payment/receipt display. An Android TV app driving both a main screen and a status bar. A vehicle infotainment system where the driver and passenger see different content. All of these require launching and controlling activities on a display that isn't the primary one.</p>
+
+  <h2>Detecting available displays</h2>
+  <p>The entry point is <code>DisplayManager</code>, which you get from the system service. It gives you a list of all connected displays and lets you register a listener for display connect/disconnect events.</p>
+  <pre>val displayManager = getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
+val displays = displayManager.displays
+
+// Find secondary displays
+val secondaryDisplays = displays.filter {"{"} it.displayId != Display.DEFAULT_DISPLAY {"}"}</pre>
+  <p>Always listen for display changes at runtime — external displays can connect and disconnect at any time, and your app needs to handle both gracefully.</p>
+
+  <h2>Launching an Activity on a specific display</h2>
+  <p>Once you have the target display's ID, you create an <code>ActivityOptions</code> bundle specifying the launch display, then pass it to <code>startActivity</code>.</p>
+  <pre>val options = ActivityOptions.makeBasic().apply {"{"}
+    launchDisplayId = targetDisplay.displayId
+{"}"}
+val intent = Intent(this, SecondScreenActivity::class.java)
+startActivity(intent, options.toBundle())</pre>
+  <p>That's the core of it. The activity launches on the specified display as a normal Android activity, with its own lifecycle, window, and view hierarchy.</p>
+
+  <h2>Communicating between screens</h2>
+  <p>This is where it gets interesting. Since both activities run in the same process, you have several clean options for communication:</p>
+  <ul>
+    <li><strong>Shared ViewModel:</strong> Both activities share a ViewModel scoped to the application — state changes in one are immediately reflected in the other via LiveData or StateFlow.</li>
+    <li><strong>Local Broadcast:</strong> Use <code>LocalBroadcastManager</code> to send events between activities without any cross-process overhead.</li>
+    <li><strong>EventBus / shared repository:</strong> A singleton repository with a shared <code>StateFlow</code> is the cleanest architecture-friendly approach.</li>
+  </ul>
+  <p>The shared ViewModel approach integrates most naturally with modern Android architecture. Both the primary and secondary screen activities observe the same state, and any update from either side propagates automatically.</p>
+
+  <h2>Handling display disconnection</h2>
+  <p>A secondary display can disappear at any time — the user unplugs HDMI, a Bluetooth display times out, or the device switches modes. Register a <code>DisplayManager.DisplayListener</code> and handle <code>onDisplayRemoved</code> to gracefully wind down any activities running on the disconnected display. Failing to do this results in orphaned activities and potential ANRs.</p>
+  <p>Multi-display development opens up a class of app experiences that most Android developers haven't explored. The API is well-documented and surprisingly approachable — the hard part is designing the UX, not writing the code.</p>
+
+  <MoreArticles slot="more-articles" articles={[
+    { href: 'blog-article-kotlin', img: 'https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=700&q=80', alt: 'Kotlin vs Java', date: 'Apr 3, 2025', title: 'Kotlin vs Java in 2025: when to still choose Java' },
+    { href: 'blog-article-star-rating', img: 'https://images.unsplash.com/photo-1618477388954-7852f32655ec?w=700&q=80', alt: 'Star Rating Widget', date: 'Aug 12, 2023', title: 'Building a Custom Interactive Star Rating Widget in Flutter' },
+    { href: 'blog-article', img: 'https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=700&q=80', alt: 'Clean Architecture', date: 'May 10, 2025', title: 'Why I switched from MVC to Clean Architecture in Flutter' },
+  ]} />
+</BlogPostLayout>

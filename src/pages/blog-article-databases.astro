@@ -1,0 +1,40 @@
+---
+import BlogPostLayout from '../layouts/BlogPostLayout.astro';
+import MoreArticles from '../components/MoreArticles.astro';
+---
+
+<BlogPostLayout
+  title="Local databases in Flutter: SQLite, Hive, or Drift?"
+  description="A practical comparison based on real production use — covering performance, query flexibility, and developer experience for offline-first apps."
+  canonicalUrl="https://waseemarain4u.github.io/my-portfolio/blog-article-databases"
+  ogImage="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80"
+  tag="Data"
+  date="Nov 14, 2024"
+  readTime="6 min read"
+>
+  <p>Offline-first is a requirement in most of the apps I build — healthcare, logistics, enterprise HRMS. When the network is unreliable, the app still needs to work. Choosing the right local storage solution is a decision that compounds over the life of the project.</p>
+
+  <h2>sqflite — the raw SQLite option</h2>
+  <p>sqflite gives you direct access to SQLite with no abstraction layer. You write SQL strings, execute them, and map results manually. It's powerful and flexible, but the developer experience is rough. No type safety, no query builder, raw strings everywhere — mistakes at runtime that a compiler could have caught.</p>
+  <p>I use sqflite when I need maximum control over a complex schema or when I'm migrating an existing SQLite database from a native Android app. For greenfield projects, there are better options.</p>
+
+  <h2>Hive — fast NoSQL for simple data</h2>
+  <p>Hive is a key-value store written in pure Dart. It's extremely fast, requires no native dependencies, and works on every Flutter platform including Web. The API is simple and the performance on reads is excellent.</p>
+  <p>The limitation is its document model. Hive works well for storing user preferences, cached API responses, and simple objects. As soon as you need relational queries — "give me all orders for this customer where status is pending" — Hive becomes awkward. You end up filtering in Dart rather than in the database, which doesn't scale.</p>
+
+  <h2>Drift — the one I reach for now</h2>
+  <p>Drift (formerly Moor) is a type-safe, reactive SQLite wrapper for Flutter. You define your schema in Dart, run the code generator, and get compile-time verified queries. Relationships, joins, migrations — it handles all of it with a clean API.</p>
+  <pre>// Type-safe, compile-time checked
+final query = select(todos)..where((t) =&gt; t.dueDate.isSmallerThan(Variable(today)));
+final results = await query.get(); // List&lt;Todo&gt;</pre>
+  <p>Drift also supports reactive streams — your UI automatically updates when the underlying data changes. Combined with BLoC or Riverpod, this creates a clean reactive data layer.</p>
+
+  <h2>My recommendation</h2>
+  <p>Simple caching or preferences: <strong>Hive</strong>. Any app with real relational data or complex queries: <strong>Drift</strong>. Raw SQL control for legacy migration: <strong>sqflite</strong>. For most production apps I build today, Drift is the default choice.</p>
+
+  <MoreArticles slot="more-articles" articles={[
+    { href: 'blog-article', img: 'https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=700&q=80', alt: 'Clean Architecture', date: 'May 10, 2025', title: 'Why I switched from MVC to Clean Architecture in Flutter' },
+    { href: 'blog-article-performance', img: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&q=80', alt: 'Performance', date: 'Dec 2, 2024', title: "5 Flutter performance mistakes I made so you don't have to" },
+    { href: 'blog-article-bloc', img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=700&q=80', alt: 'State management', date: 'Feb 18, 2025', title: 'BLoC, Riverpod, or Provider? My honest take after 4 years' },
+  ]} />
+</BlogPostLayout>

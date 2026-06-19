@@ -1,0 +1,43 @@
+---
+import BlogPostLayout from '../layouts/BlogPostLayout.astro';
+import MoreArticles from '../components/MoreArticles.astro';
+---
+
+<BlogPostLayout
+  title="5 Flutter performance mistakes I made so you don't have to"
+  description="Jank, memory leaks, unnecessary rebuilds — a tour of the performance issues I've debugged over the years and how to avoid them."
+  canonicalUrl="https://waseemarain4u.github.io/my-portfolio/blog-article-performance"
+  ogImage="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&q=80"
+  tag="Performance"
+  date="Dec 2, 2024"
+  readTime="7 min read"
+>
+  <p>Flutter apps are fast by default — until they aren't. I've debugged enough jank, memory pressure issues, and frame drops across production apps to have strong opinions about where Flutter performance problems actually come from.</p>
+
+  <h2>1. Rebuilding the entire widget tree on state changes</h2>
+  <p>This is the most common mistake I see in Flutter codebases. A single ChangeNotifier or BLoC state update triggers a rebuild at the top of the tree, and Flutter re-renders widgets that have nothing to do with the changed data. The fix is straightforward: push state as low as possible, use <code>const</code> constructors everywhere you can, and wrap expensive subtrees in <code>RepaintBoundary</code>.</p>
+  <pre>// Don't do this — rebuilds the whole screen
+Consumer&lt;AppState&gt;(builder: (ctx, state, _) =&gt; Scaffold(...));
+
+// Do this — rebuilds only the widget that needs the data
+Consumer&lt;AppState&gt;(builder: (ctx, state, _) =&gt; Text(state.username));</pre>
+
+  <h2>2. Heavy work on the main isolate</h2>
+  <p>JSON parsing, image processing, and database queries run on the main thread by default. On large payloads this causes visible frame drops. Move anything that takes more than a few milliseconds to a separate isolate using <code>compute()</code> or Flutter's Isolate API.</p>
+
+  <h2>3. Not disposing controllers and streams</h2>
+  <p>TextEditingControllers, AnimationControllers, StreamSubscriptions — all of these leak memory if you don't dispose them. I've seen apps with gradual memory growth that was entirely caused by controllers created in <code>initState</code> and never cleaned up. Always override <code>dispose()</code>. Always.</p>
+
+  <h2>4. Loading full-resolution images</h2>
+  <p>Loading a 4K photo to display in a 50x50 avatar thumbnail is a surprisingly common performance issue. Use <code>cacheWidth</code> and <code>cacheHeight</code> parameters on <code>Image.network</code> to decode images at the size they'll actually be displayed. On image-heavy screens, this alone can cut memory usage significantly.</p>
+
+  <h2>5. Animating with setState</h2>
+  <p>Using <code>setState</code> inside an animation callback rebuilds the whole widget on every frame. Use <code>AnimatedBuilder</code> or <code>AnimatedWidget</code> instead — they limit the rebuild to only the animated portion of the tree. On complex screens this is the difference between smooth 60fps and visible jank.</p>
+  <p>The Flutter DevTools performance tab is your best friend for diagnosing all of these. Profile in release mode — debug mode is much slower and will give you misleading results.</p>
+
+  <MoreArticles slot="more-articles" articles={[
+    { href: 'blog-article', img: 'https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=700&q=80', alt: 'Clean Architecture', date: 'May 10, 2025', title: 'Why I switched from MVC to Clean Architecture in Flutter' },
+    { href: 'blog-article-bloc', img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=700&q=80', alt: 'State management', date: 'Feb 18, 2025', title: 'BLoC, Riverpod, or Provider? My honest take after 4 years' },
+    { href: 'blog-article-kotlin', img: 'https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=700&q=80', alt: 'Kotlin', date: 'Apr 3, 2025', title: 'Kotlin vs Java in 2025: when to still choose Java' },
+  ]} />
+</BlogPostLayout>

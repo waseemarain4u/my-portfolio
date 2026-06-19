@@ -1,88 +1,14 @@
-<!DOCTYPE html>
-<html lang="en" x-data="app()" :class="{'dark':dark}">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Waseem Akram — Senior Flutter Developer & Lead Developer. Cross-platform mobile apps for Android, iOS, Web and Desktop.">
-<meta name="author" content="Waseem Akram">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://waseemarain4u.github.io/my-portfolio/">
-<meta property="og:title" content="Waseem Akram — Senior Flutter Developer & Lead Developer">
-<meta property="og:description" content="Senior Flutter & Android developer with 10+ years experience. Cross-platform mobile apps for Android, iOS, Web and Desktop.">
-<meta property="og:image" content="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200&q=80">
-<link rel="canonical" href="https://waseemarain4u.github.io/my-portfolio/">
-<title>Waseem Akram — Senior Flutter Developer &amp; Lead Developer</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
-<script>
-tailwind.config = {
-  darkMode: 'class',
-  theme: {
-    extend: {
-      fontFamily: { display: ['PT Sans','sans-serif'], body: ['DM Sans','sans-serif'] },
-      colors: { accent: '#2563EB', 'accent-light': '#3B82F6' }
-    }
-  }
-}
-</script>
-<style>
-*,*::before,*::after{box-sizing:border-box}
-html,body{font-family:'DM Sans',sans-serif}
-h1,h2,h3,h4,h5,h6{font-family:'PT Sans',sans-serif}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.25;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E")}
-::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#2563EB;border-radius:99px}
-.pf{overflow:hidden;background:#d4d4d8}.pf img{width:100%;height:100%;object-fit:cover;display:block}
-[x-cloak]{display:none!important}
-</style>
-</head>
-<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
+---
+import HomeLayout from '../layouts/HomeLayout.astro';
+const base = import.meta.env.BASE_URL;
+---
 
-<!-- NAV -->
-<header class="fixed inset-x-0 top-0 z-50 transition-all duration-300"
-  :class="sc?'bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5':''">
-  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-    <a href="#hero" class="font-display font-bold text-xl tracking-tight relative z-10">
-      <span class="text-zinc-900 dark:text-white">waseem</span><span class="text-accent">.</span>
-    </a>
-    <ul class="hidden md:flex items-center gap-8 text-sm" role="list">
-      <li><a href="#services" class="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='services'?'font-medium !text-zinc-900 dark:!text-white':''">Skills</a></li>
-      <li><a href="#work" class="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='work'?'font-medium !text-zinc-900 dark:!text-white':''">Work</a></li>
-      <li><a href="#about" class="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='about'?'font-medium !text-zinc-900 dark:!text-white':''">About</a></li>
-      <li><a href="#experience" class="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='experience'?'font-medium !text-zinc-900 dark:!text-white':''">Experience</a></li>
-      <li><a href="#blog" class="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='blog'?'font-medium !text-zinc-900 dark:!text-white':''">Blog</a></li>
-      <li><a href="#contact" class="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='contact'?'font-medium !text-zinc-900 dark:!text-white':''">Contact</a></li>
-    </ul>
-    <div class="flex items-center gap-3">
-      <button @click="dark=!dark" class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors" :aria-label="dark?'Light mode':'Dark mode'">
-        <svg x-show="!dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-        <svg x-show="dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
-      </button>
-      <a href="#contact" class="hidden md:inline-flex items-center gap-2 bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors">
-        Hire me <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-      </a>
-      <button @click="mm=!mm" class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800" :aria-expanded="mm" aria-label="Toggle menu">
-        <svg x-show="!mm" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-        <svg x-show="mm" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
-    </div>
-  </nav>
-  <div x-show="mm" x-cloak class="md:hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900">
-    <ul class="flex flex-col px-6 py-5 gap-4 text-sm font-medium" role="list">
-      <li><a href="#services" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Skills</a></li>
-      <li><a href="#work" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Work</a></li>
-      <li><a href="#about" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">About</a></li>
-      <li><a href="#experience" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Experience</a></li>
-      <li><a href="#blog" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Blog</a></li>
-      <li><a href="#contact" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Contact</a></li>
-      <li class="pt-2 border-t border-zinc-100 dark:border-zinc-900">
-        <a href="#contact" @click="mm=false" class="inline-flex bg-accent text-white font-medium text-sm px-5 py-2.5 rounded-full">Hire me &rarr;</a>
-      </li>
-    </ul>
-  </div>
-</header>
+<HomeLayout
+  title="Waseem Akram — Senior Flutter Developer & Lead Developer"
+  description="Senior Flutter & Android developer with 10+ years experience. Cross-platform mobile apps for Android, iOS, Web and Desktop."
+  canonicalUrl="https://waseemarain4u.github.io/my-portfolio/"
+  ogImage="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200&q=80"
+>
 
 <main>
 
@@ -90,7 +16,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 <section id="hero" class="relative pt-16">
   <div class="relative z-10 max-w-6xl mx-auto px-6 py-24 w-full">
     <div class="grid md:grid-cols-2 gap-12 items-center">
-      <!-- Left: text -->
       <div>
         <p class="text-sm font-medium text-accent tracking-widest uppercase mb-4">Available for new projects</p>
         <h1 class="font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-zinc-900 dark:text-white mb-6">
@@ -112,7 +37,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
           <div><p class="font-display font-bold text-3xl text-zinc-900 dark:text-white">6+</p><p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Companies served</p></div>
         </div>
       </div>
-      <!-- Right: Flutter phone mockup -->
       <div class="hidden md:flex justify-center items-center">
         <div class="relative w-64">
           <div class="relative bg-zinc-900 dark:bg-zinc-800 rounded-[2.5rem] p-3 shadow-2xl ring-1 ring-zinc-700">
@@ -181,7 +105,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
         <p class="text-xs font-medium text-accent tracking-widest uppercase mb-3">Portfolio</p>
         <h2 class="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">Selected Work</h2>
       </div>
-      <a href="projects.html" class="text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-accent transition-colors self-start sm:self-auto">All projects &rarr;</a>
+      <a href={`${base}projects`} class="text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-accent transition-colors self-start sm:self-auto">All projects &rarr;</a>
     </div>
     <div class="grid md:grid-cols-2 gap-6">
       <article class="group rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors md:row-span-2">
@@ -228,7 +152,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
   </div>
 </section>
 
-
 <!-- BLOG -->
 <section id="blog" class="py-24 bg-zinc-50 dark:bg-zinc-900/40">
   <div class="max-w-6xl mx-auto px-6">
@@ -237,7 +160,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
         <p class="text-xs font-medium text-accent tracking-widest uppercase mb-3">Writing</p>
         <h2 class="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">From the Blog</h2>
       </div>
-      <a href="blog.html" class="text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-accent transition-colors self-start sm:self-auto">All articles &rarr;</a>
+      <a href={`${base}blog`} class="text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-accent transition-colors self-start sm:self-auto">All articles &rarr;</a>
     </div>
     <div class="grid md:grid-cols-3 gap-6">
       <article class="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
@@ -247,9 +170,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
             <span class="text-xs bg-blue-50 dark:bg-zinc-800 text-accent border border-blue-200 dark:border-zinc-700 px-2.5 py-1 rounded-full">Flutter</span>
             <span class="text-xs text-zinc-400">May 10, 2025</span>
           </div>
-          <a href="blog-article.html"><h3 class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors">Why I switched from MVC to Clean Architecture in Flutter</h3></a>
+          <a href={`${base}blog-article`}><h3 class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors">Why I switched from MVC to Clean Architecture in Flutter</h3></a>
           <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4">After shipping 5 apps with traditional MVC, here's what finally pushed me to restructure everything.</p>
-          <a href="blog-article.html" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white">Read more &rarr;</a>
+          <a href={`${base}blog-article`} class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white">Read more &rarr;</a>
         </div>
       </article>
       <article class="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
@@ -259,9 +182,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
             <span class="text-xs bg-blue-50 dark:bg-zinc-800 text-accent border border-blue-200 dark:border-zinc-700 px-2.5 py-1 rounded-full">Flutter</span>
             <span class="text-xs text-zinc-400">Feb 18, 2025</span>
           </div>
-          <a href="blog-article-bloc.html"><h3 class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors">BLoC, Riverpod, or Provider? My honest take after 4 years</h3></a>
+          <a href={`${base}blog-article-bloc`}><h3 class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors">BLoC, Riverpod, or Provider? My honest take after 4 years</h3></a>
           <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4">I've shipped Flutter apps with all three. Here's when each one is actually the right choice.</p>
-          <a href="blog-article-bloc.html" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white">Read more &rarr;</a>
+          <a href={`${base}blog-article-bloc`} class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white">Read more &rarr;</a>
         </div>
       </article>
       <article class="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
@@ -271,9 +194,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
             <span class="text-xs bg-blue-50 dark:bg-zinc-800 text-accent border border-blue-200 dark:border-zinc-700 px-2.5 py-1 rounded-full">Flutter</span>
             <span class="text-xs text-zinc-400">Jun 21, 2023</span>
           </div>
-          <a href="blog-article-why-flutter.html"><h3 class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors">Why Flutter is better?</h3></a>
+          <a href={`${base}blog-article-why-flutter`}><h3 class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors">Why Flutter is better?</h3></a>
           <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4">8 reasons why Flutter stands out — single codebase, native performance, rich UI, and why Google's backing matters.</p>
-          <a href="blog-article-why-flutter.html" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white">Read more &rarr;</a>
+          <a href={`${base}blog-article-why-flutter`} class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white">Read more &rarr;</a>
         </div>
       </article>
     </div>
@@ -284,7 +207,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 <section id="about" class="py-24 bg-zinc-50 dark:bg-zinc-900/40">
   <div class="max-w-6xl mx-auto px-6">
     <div class="grid md:grid-cols-2 gap-12 items-center">
-      <!-- Left: text -->
       <div>
         <p class="text-xs font-medium text-accent tracking-widest uppercase mb-3">About me</p>
         <h2 class="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white mb-6">Diligent dev, team player</h2>
@@ -300,21 +222,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
         <div>
           <p class="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-3">Stack &amp; Tools</p>
           <div class="flex flex-wrap gap-2" role="list" aria-label="Skills">
-            <span role="listitem" class="text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full hover:border-accent transition-colors">Flutter</span>
-            <span role="listitem" class="text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full hover:border-accent transition-colors">Dart</span>
-            <span role="listitem" class="text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full hover:border-accent transition-colors">Kotlin</span>
-            <span role="listitem" class="text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full hover:border-accent transition-colors">Java</span>
-            <span role="listitem" class="text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full hover:border-accent transition-colors">Android Studio</span>
-            <span role="listitem" class="text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full hover:border-accent transition-colors">SQL</span>
-            <span role="listitem" class="text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full hover:border-accent transition-colors">Firebase</span>
-            <span role="listitem" class="text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full hover:border-accent transition-colors">REST APIs</span>
-            <span role="listitem" class="text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full hover:border-accent transition-colors">Payment Integration</span>
-            <span role="listitem" class="text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full hover:border-accent transition-colors">App Architecture</span>
-            <span role="listitem" class="text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full hover:border-accent transition-colors">UI/UX Optimization</span>
+            {['Flutter','Dart','Kotlin','Java','Android Studio','SQL','Firebase','REST APIs','Payment Integration','App Architecture','UI/UX Optimization'].map(skill => (
+              <span role="listitem" class="text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full hover:border-accent transition-colors">{skill}</span>
+            ))}
           </div>
         </div>
       </div>
-      <!-- Right: photo + stats -->
       <div class="flex flex-col gap-6">
         <div class="pf w-full rounded-2xl overflow-hidden" style="height:320px">
           <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=800&q=80" alt="Flutter development" loading="lazy">
@@ -346,76 +259,26 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
       <h2 class="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">Experience</h2>
     </div>
     <div class="flex flex-col gap-10">
-      <div class="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
-        <div class="md:text-right md:pr-12">
-          <span class="inline-block text-xs font-medium text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-3 py-1 rounded-full mb-2">Dec 2023 — Present</span>
-          <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white">Senior Flutter Developer</h3>
-          <p class="text-sm text-zinc-500 dark:text-zinc-400">Cronysoft</p>
+      {[
+        { period: 'Dec 2023 — Present', role: 'Senior Flutter Developer', company: 'Cronysoft', desc: 'Leading cross-platform development for mobile, desktop, and web applications. Driving user-centric design decisions, collaborating directly with stakeholders, and mentoring junior developers to deliver high-quality products on schedule.' },
+        { period: 'Jan 2020 — Nov 2023', role: 'Senior Mobile Application Developer', company: 'Codelabs', desc: 'Directed application development across multiple product lines. Researched and introduced new development methodologies to boost team efficiency, and mentored junior developers in best practices.' },
+        { period: 'Jul 2019 — Dec 2019', role: 'Senior Developer', company: 'NxN Pakistan', desc: 'Developed, installed, and configured internal applications and managed new release deployments into test and production environments.' },
+        { period: 'Jan 2016 — Jun 2019', role: 'Android Developer', company: 'MyCart', desc: 'Built an e-commerce consumer app, inventory management system, rider app, and employee applications — a complete mobile ecosystem supporting multiple operations departments.' },
+        { period: 'Nov 2013 — Dec 2015', role: 'Android Developer', company: 'D4sys', desc: 'Participated in architectural decisions for mobile apps and supervised junior team members through code reviews and mentoring sessions.' },
+        { period: 'Mar 2014 — Mar 2015 · Part Time', role: 'Android Developer', company: 'Technology Minds', desc: 'Developed various mobile applications in collaboration with peer developers. Implemented new controls and methods in native Android development as part of a team.' },
+        { period: 'Mar 2013 — Sep 2013', role: 'Junior Android Developer', company: 'Aleedex', desc: 'Collaborated with the mobile team across different projects. Solved Android app development challenges including memory and performance issues.' },
+      ].map(job => (
+        <div class="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
+          <div class="md:text-right md:pr-12">
+            <span class="inline-block text-xs font-medium text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-3 py-1 rounded-full mb-2">{job.period}</span>
+            <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white">{job.role}</h3>
+            <p class="text-sm text-zinc-500 dark:text-zinc-400">{job.company}</p>
+          </div>
+          <div class="md:pl-12">
+            <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">{job.desc}</p>
+          </div>
         </div>
-        <div class="md:pl-12">
-          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Leading cross-platform development for mobile, desktop, and web applications. Driving user-centric design decisions, collaborating directly with stakeholders, and mentoring junior developers to deliver high-quality products on schedule.</p>
-        </div>
-      </div>
-      <div class="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
-        <div class="md:text-right md:pr-12">
-          <span class="inline-block text-xs font-medium text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-3 py-1 rounded-full mb-2">Jan 2020 — Nov 2023</span>
-          <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white">Senior Mobile Application Developer</h3>
-          <p class="text-sm text-zinc-500 dark:text-zinc-400">Codelabs</p>
-        </div>
-        <div class="md:pl-12">
-          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Directed application development across multiple product lines. Researched and introduced new development methodologies to boost team efficiency, and mentored junior developers in best practices.</p>
-        </div>
-      </div>
-      <div class="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
-        <div class="md:text-right md:pr-12">
-          <span class="inline-block text-xs font-medium text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-3 py-1 rounded-full mb-2">Jul 2019 — Dec 2019</span>
-          <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white">Senior Developer</h3>
-          <p class="text-sm text-zinc-500 dark:text-zinc-400">NxN Pakistan</p>
-        </div>
-        <div class="md:pl-12">
-          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Developed, installed, and configured internal applications and managed new release deployments into test and production environments.</p>
-        </div>
-      </div>
-      <div class="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
-        <div class="md:text-right md:pr-12">
-          <span class="inline-block text-xs font-medium text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-3 py-1 rounded-full mb-2">Jan 2016 — Jun 2019</span>
-          <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white">Android Developer</h3>
-          <p class="text-sm text-zinc-500 dark:text-zinc-400">MyCart</p>
-        </div>
-        <div class="md:pl-12">
-          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Built an e-commerce consumer app, inventory management system, rider app, and employee applications — a complete mobile ecosystem supporting multiple operations departments.</p>
-        </div>
-      </div>
-      <div class="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
-        <div class="md:text-right md:pr-12">
-          <span class="inline-block text-xs font-medium text-zinc-500 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-3 py-1 rounded-full mb-2">Nov 2013 — Dec 2015</span>
-          <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white">Android Developer</h3>
-          <p class="text-sm text-zinc-500 dark:text-zinc-400">D4sys</p>
-        </div>
-        <div class="md:pl-12">
-          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Participated in architectural decisions for mobile apps and supervised junior team members through code reviews and mentoring sessions.</p>
-        </div>
-      </div>
-      <div class="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
-        <div class="md:text-right md:pr-12">
-          <span class="inline-block text-xs font-medium text-zinc-500 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-3 py-1 rounded-full mb-2">Mar 2014 — Mar 2015 · Part Time</span>
-          <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white">Android Developer</h3>
-          <p class="text-sm text-zinc-500 dark:text-zinc-400">Technology Minds</p>
-        </div>
-        <div class="md:pl-12">
-          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Developed various mobile applications in collaboration with peer developers. Implemented new controls and methods in native Android development as part of a team.</p>
-        </div>
-      </div>
-      <div class="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
-        <div class="md:text-right md:pr-12">
-          <span class="inline-block text-xs font-medium text-zinc-500 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-3 py-1 rounded-full mb-2">Mar 2013 — Sep 2013</span>
-          <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white">Junior Android Developer</h3>
-          <p class="text-sm text-zinc-500 dark:text-zinc-400">Aleedex</p>
-        </div>
-        <div class="md:pl-12">
-          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Collaborated with the mobile team across different projects. Solved Android app development challenges including memory and performance issues.</p>
-        </div>
-      </div>
+      ))}
     </div>
   </div>
 </section>
@@ -444,7 +307,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
               </span>
               <span class="text-sm">+92 333 7083747</span>
             </a>
-
           </div>
         </div>
         <div>
@@ -478,39 +340,4 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 </section>
 
 </main>
-
-<footer class="border-t border-zinc-100 dark:border-zinc-900">
-  <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-    <p class="text-sm text-zinc-400">&copy; <span id="yr"></span> Waseem Akram. All rights reserved.</p>
-    <p class="text-xs text-zinc-500">Senior Flutter Developer &amp; Lead Developer</p>
-  </div>
-</footer>
-
-<script>
-function app() {
-  return {
-    dark: false, mm: false, sc: false, s: 'hero',
-    init() {
-      this.dark = localStorage.getItem('theme') === 'dark' ||
-        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
-      this.$watch('dark', v => localStorage.setItem('theme', v ? 'dark' : 'light'));
-      window.addEventListener('scroll', () => {
-        this.sc = window.scrollY > 20;
-        this.updateSection();
-      }, { passive: true });
-      document.getElementById('yr').textContent = new Date().getFullYear();
-    },
-    updateSection() {
-      const atBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 60;
-      if (atBottom) { this.s = 'contact'; return; }
-      const ids = ['contact','experience','about','blog','work','services','hero'];
-      for (const id of ids) {
-        const el = document.getElementById(id);
-        if (el && window.scrollY >= el.offsetTop - 130) { this.s = id; return; }
-      }
-    }
-  }
-}
-</script>
-</body>
-</html>
+</HomeLayout>
