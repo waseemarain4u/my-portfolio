@@ -1,6 +1,6 @@
 ---
 import BlogPostLayout from '../layouts/BlogPostLayout.astro';
-const base = import.meta.env.BASE_URL;
+import MoreArticles from '../components/MoreArticles.astro';
 ---
 
 <BlogPostLayout
@@ -33,26 +33,9 @@ const base = import.meta.env.BASE_URL;
   <p>New project? Kotlin, no question. Existing Java project? Migrate new features to Kotlin, leave stable old code alone. Mixed team with Java seniors? Start with Kotlin for new modules and invest in upskilling — the productivity gains compound quickly once the team is comfortable.</p>
   <p>The language debate matters less than most developers think. Clean architecture, good testing habits, and maintainable code are language-agnostic.</p>
 
-  <div slot="more-articles">
-    <section class="bg-zinc-50 dark:bg-zinc-900/40 py-16">
-      <div class="max-w-6xl mx-auto px-6">
-        <h2 class="font-display font-bold text-2xl text-zinc-900 dark:text-white mb-8">More articles</h2>
-        <div class="grid md:grid-cols-3 gap-6">
-          {[
-            { href: 'blog-article', img: 'https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=700&q=80', alt: 'Clean Architecture', date: 'May 10, 2025', title: 'Why I switched from MVC to Clean Architecture in Flutter' },
-            { href: 'blog-article-performance', img: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&q=80', alt: 'Performance', date: 'Dec 2, 2024', title: "5 Flutter performance mistakes I made so you don't have to" },
-            { href: 'blog-article-bloc', img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=700&q=80', alt: 'State management', date: 'Feb 18, 2025', title: 'BLoC, Riverpod, or Provider? My honest take after 4 years' },
-          ].map(p => (
-            <article class="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-all hover:-translate-y-1">
-              <div class="pf w-full h-40"><img src={p.img} alt={p.alt} loading="lazy"></div>
-              <div class="p-5">
-                <p class="text-xs text-zinc-400 mb-2">{p.date}</p>
-                <a href={`${base}${p.href}`}><h3 class="font-display font-bold text-base text-zinc-900 dark:text-white group-hover:text-accent transition-colors">{p.title}</h3></a>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  </div>
+  <MoreArticles slot="more-articles" articles={[
+    { href: 'blog-article', img: 'https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=700&q=80', alt: 'Clean Architecture', date: 'May 10, 2025', title: 'Why I switched from MVC to Clean Architecture in Flutter' },
+    { href: 'blog-article-performance', img: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&q=80', alt: 'Performance', date: 'Dec 2, 2024', title: "5 Flutter performance mistakes I made so you don't have to" },
+    { href: 'blog-article-bloc', img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=700&q=80', alt: 'State management', date: 'Feb 18, 2025', title: 'BLoC, Riverpod, or Provider? My honest take after 4 years' },
+  ]} />
 </BlogPostLayout>

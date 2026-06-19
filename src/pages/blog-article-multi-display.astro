@@ -1,6 +1,6 @@
 ---
 import BlogPostLayout from '../layouts/BlogPostLayout.astro';
-const base = import.meta.env.BASE_URL;
+import MoreArticles from '../components/MoreArticles.astro';
 ---
 
 <BlogPostLayout
@@ -49,26 +49,9 @@ startActivity(intent, options.toBundle())</pre>
   <p>A secondary display can disappear at any time — the user unplugs HDMI, a Bluetooth display times out, or the device switches modes. Register a <code>DisplayManager.DisplayListener</code> and handle <code>onDisplayRemoved</code> to gracefully wind down any activities running on the disconnected display. Failing to do this results in orphaned activities and potential ANRs.</p>
   <p>Multi-display development opens up a class of app experiences that most Android developers haven't explored. The API is well-documented and surprisingly approachable — the hard part is designing the UX, not writing the code.</p>
 
-  <div slot="more-articles">
-    <section class="bg-zinc-50 dark:bg-zinc-900/40 py-16">
-      <div class="max-w-6xl mx-auto px-6">
-        <h2 class="font-display font-bold text-2xl text-zinc-900 dark:text-white mb-8">More articles</h2>
-        <div class="grid md:grid-cols-3 gap-6">
-          {[
-            { href: 'blog-article-kotlin', img: 'https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=700&q=80', alt: 'Kotlin vs Java', date: 'Apr 3, 2025', title: 'Kotlin vs Java in 2025: when to still choose Java' },
-            { href: 'blog-article-star-rating', img: 'https://images.unsplash.com/photo-1618477388954-7852f32655ec?w=700&q=80', alt: 'Star Rating Widget', date: 'Aug 12, 2023', title: 'Building a Custom Interactive Star Rating Widget in Flutter' },
-            { href: 'blog-article', img: 'https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=700&q=80', alt: 'Clean Architecture', date: 'May 10, 2025', title: 'Why I switched from MVC to Clean Architecture in Flutter' },
-          ].map(p => (
-            <article class="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-all hover:-translate-y-1">
-              <div class="pf w-full h-40"><img src={p.img} alt={p.alt} loading="lazy"></div>
-              <div class="p-5">
-                <p class="text-xs text-zinc-400 mb-2">{p.date}</p>
-                <a href={`${base}${p.href}`}><h3 class="font-display font-bold text-base text-zinc-900 dark:text-white group-hover:text-accent transition-colors">{p.title}</h3></a>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  </div>
+  <MoreArticles slot="more-articles" articles={[
+    { href: 'blog-article-kotlin', img: 'https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=700&q=80', alt: 'Kotlin vs Java', date: 'Apr 3, 2025', title: 'Kotlin vs Java in 2025: when to still choose Java' },
+    { href: 'blog-article-star-rating', img: 'https://images.unsplash.com/photo-1618477388954-7852f32655ec?w=700&q=80', alt: 'Star Rating Widget', date: 'Aug 12, 2023', title: 'Building a Custom Interactive Star Rating Widget in Flutter' },
+    { href: 'blog-article', img: 'https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=700&q=80', alt: 'Clean Architecture', date: 'May 10, 2025', title: 'Why I switched from MVC to Clean Architecture in Flutter' },
+  ]} />
 </BlogPostLayout>

@@ -1,0 +1,24 @@
+---
+interface Props {
+  articles: Array<{ href: string; img: string; alt: string; date: string; title: string }>;
+}
+const { articles } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<section class="bg-zinc-50 dark:bg-zinc-900/40 py-16">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="font-display font-bold text-2xl text-zinc-900 dark:text-white mb-8">More articles</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      {articles.map(p => (
+        <article class="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-all hover:-translate-y-1">
+          <div class="pf w-full h-40"><img src={p.img} alt={p.alt} loading="lazy"></div>
+          <div class="p-5">
+            <p class="text-xs text-zinc-400 mb-2">{p.date}</p>
+            <a href={`${base}${p.href}`}><h3 class="font-display font-bold text-base text-zinc-900 dark:text-white group-hover:text-accent transition-colors">{p.title}</h3></a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
