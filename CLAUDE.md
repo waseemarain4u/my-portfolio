@@ -1,5 +1,10 @@
 # my-portfolio — Claude Context
 
+## Rules
+- **Always explain before coding.** For any task, describe what you plan to change and why, then wait for the user to confirm before writing or editing any code.
+- Keep explanations short — bullet points, not paragraphs.
+- If the plan is wrong or incomplete, the user will redirect before any code is touched.
+
 ## Project
 Static portfolio site for Waseem Akram (Senior Flutter Developer & Lead Developer).
 No build system. Edit HTML files directly and push — GitHub Actions deploys to GitHub Pages.
