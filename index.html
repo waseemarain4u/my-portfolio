@@ -36,6 +36,24 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#2563EB;border-radius:99px}
 .pf{overflow:hidden;background:#e4e4e7}.pf img{width:100%;height:100%;object-fit:cover;display:block}
 [x-cloak]{display:none!important}
+/* Scroll-reveal */
+.reveal,.reveal-left,.reveal-right{opacity:0;transition:opacity .65s ease,transform .65s ease}
+.reveal{transform:translateY(28px)}.reveal-left{transform:translateX(-32px)}.reveal-right{transform:translateX(32px)}
+.reveal.visible,.reveal-left.visible,.reveal-right.visible{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}.d5{transition-delay:.5s}.d6{transition-delay:.6s}.d7{transition-delay:.7s}
+/* Hero entrance */
+@keyframes heroUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.ha{opacity:0;animation:heroUp .65s ease forwards}
+.hd1{animation-delay:.05s}.hd2{animation-delay:.2s}.hd3{animation-delay:.35s}.hd4{animation-delay:.5s}.hd5{animation-delay:.65s}.hd6{animation-delay:.8s}
+/* Float */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.float-anim{animation:float 4s ease-in-out infinite}
+/* Card hover lift */
+.card-lift{transition:transform .3s ease,box-shadow .3s ease}
+.card-lift:hover{transform:translateY(-5px);box-shadow:0 24px 48px rgba(0,0,0,.09)}
+/* Blob pulse */
+@keyframes blobPulse{0%,100%{transform:scale(1);opacity:.2}50%{transform:scale(1.12);opacity:.35}}
+.blob-pulse{animation:blobPulse 5s ease-in-out infinite}
 </style>
 </head>
 <body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
@@ -92,21 +110,21 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
     <div class="grid md:grid-cols-2 gap-12 items-center">
       <!-- Left: text -->
       <div>
-        <p class="text-sm font-medium text-accent tracking-widest uppercase mb-4">Available for new projects</p>
-        <h1 class="font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-zinc-900 dark:text-white mb-6">
+        <p class="ha hd1 text-sm font-medium text-accent tracking-widest uppercase mb-4">Available for new projects</p>
+        <h1 class="ha hd2 font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-zinc-900 dark:text-white mb-6">
           Hi, I'm <span class="text-accent">Waseem</span>
         </h1>
-        <p class="text-lg md:text-xl text-zinc-500 dark:text-zinc-400 font-light leading-relaxed mb-10">
+        <p class="ha hd3 text-lg md:text-xl text-zinc-500 dark:text-zinc-400 font-light leading-relaxed mb-10">
           <strong class="font-medium text-zinc-700 dark:text-zinc-300">Lead Mobile Developer &amp; Software Engineer</strong> — Flutter/Android | iOS | Desktop (Windows &amp; Mac) | Web. I architect scalable, high-performance apps with clean UI, efficient state management, and seamless backend integrations. Fast, beautiful, and built to last.
         </p>
-        <div class="flex flex-wrap gap-4">
+        <div class="ha hd4 flex flex-wrap gap-4">
           <a href="#work" class="inline-flex items-center gap-2 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-medium px-7 py-3.5 rounded-full hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors text-sm">
             View my work
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </a>
           <a href="#contact" class="inline-flex items-center gap-2 border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 font-medium px-7 py-3.5 rounded-full hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors text-sm">Get in touch</a>
         </div>
-        <div class="flex items-center gap-5 mt-6">
+        <div class="ha hd5 flex items-center gap-5 mt-6">
           <a href="https://github.com/waseemarain4u" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors text-sm">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
             GitHub
@@ -117,15 +135,15 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
             LinkedIn
           </a>
         </div>
-        <div class="flex gap-8 mt-14 pt-8 border-t border-zinc-100 dark:border-zinc-900">
-          <div><p class="font-display font-bold text-3xl text-zinc-900 dark:text-white">15+</p><p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Apps shipped</p></div>
-          <div><p class="font-display font-bold text-3xl text-zinc-900 dark:text-white">10+</p><p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Years experience</p></div>
-          <div><p class="font-display font-bold text-3xl text-zinc-900 dark:text-white">6+</p><p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Companies served</p></div>
+        <div class="ha hd6 flex gap-8 mt-14 pt-8 border-t border-zinc-100 dark:border-zinc-900">
+          <div><p class="font-display font-bold text-3xl text-zinc-900 dark:text-white" data-count="15">15+</p><p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Apps shipped</p></div>
+          <div><p class="font-display font-bold text-3xl text-zinc-900 dark:text-white" data-count="10">10+</p><p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Years experience</p></div>
+          <div><p class="font-display font-bold text-3xl text-zinc-900 dark:text-white" data-count="6">6+</p><p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Companies served</p></div>
         </div>
       </div>
       <!-- Right: Flutter phone mockup -->
       <div class="hidden md:flex justify-center items-center">
-        <div class="relative w-64">
+        <div class="float-anim relative w-64">
           <div class="relative bg-zinc-900 dark:bg-zinc-800 rounded-[2.5rem] p-3 shadow-2xl ring-1 ring-zinc-700">
             <div class="absolute top-3 left-1/2 -translate-x-1/2 w-20 h-5 bg-zinc-800 dark:bg-zinc-700 rounded-full z-10"></div>
             <div class="rounded-[2rem] overflow-hidden bg-white" style="height:500px">
@@ -154,26 +172,26 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 <!-- SKILLS -->
 <section id="services" class="py-24 bg-zinc-50 dark:bg-zinc-900/40">
   <div class="max-w-6xl mx-auto px-6">
-    <div class="mb-14">
+    <div class="reveal mb-14">
       <p class="text-xs font-medium text-accent tracking-widest uppercase mb-3">What I do</p>
       <h2 class="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">Core Skills</h2>
     </div>
     <div class="grid md:grid-cols-3 gap-6">
-      <article class="group bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
+      <article class="reveal d1 card-lift group bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
         <div class="w-12 h-12 flex items-center justify-center bg-blue-50 dark:bg-zinc-800 rounded-xl mb-6 group-hover:bg-accent/10 transition-colors">
           <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
         </div>
         <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-3">Flutter Development</h3>
         <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Cross-platform apps for Android, iOS, Web, and Desktop from a single codebase. Clean architecture, state management, and pixel-perfect UIs that feel truly native on every platform.</p>
       </article>
-      <article class="group bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
+      <article class="reveal d2 card-lift group bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
         <div class="w-12 h-12 flex items-center justify-center bg-blue-50 dark:bg-zinc-800 rounded-xl mb-6 group-hover:bg-accent/10 transition-colors">
           <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
         </div>
         <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-3">Android (Java / Kotlin)</h3>
         <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Native Android apps with Kotlin and Java. From architectural decisions to Play Store delivery — including complex integrations, background services, and performance-critical features.</p>
       </article>
-      <article class="group bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
+      <article class="reveal d3 card-lift group bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
         <div class="w-12 h-12 flex items-center justify-center bg-blue-50 dark:bg-zinc-800 rounded-xl mb-6 group-hover:bg-accent/10 transition-colors">
           <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         </div>
@@ -187,7 +205,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 <!-- WORK -->
 <section id="work" class="py-24">
   <div class="max-w-6xl mx-auto px-6">
-    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14">
+    <div class="reveal flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14">
       <div>
         <p class="text-xs font-medium text-accent tracking-widest uppercase mb-3">Portfolio</p>
         <h2 class="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">Selected Work</h2>
@@ -195,7 +213,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
       <a href="projects.html" class="text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-accent transition-colors self-start sm:self-auto">All projects &rarr;</a>
     </div>
     <div class="grid md:grid-cols-2 gap-6">
-      <article class="group rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors md:row-span-2">
+      <article class="reveal card-lift group rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors md:row-span-2">
         <div class="pf w-full h-64 md:h-80">
           <img src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=900&q=80" alt="AI Content Master" loading="lazy">
         </div>
@@ -209,7 +227,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
           <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">A cross-platform AI-powered content generation app built with Flutter. Delivers a seamless experience on Android, iOS, and Web from a single codebase. Features intelligent writing assistance, rich text editing, and cloud sync across devices.</p>
         </div>
       </article>
-      <article class="group rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
+      <article class="reveal d2 card-lift group rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
         <div class="pf w-full h-48">
           <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=800&q=80" alt="MyCart E-commerce App" loading="lazy">
         </div>
@@ -222,7 +240,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
           <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Consumer app, inventory management, rider app, and employee apps — a complete e-commerce ecosystem built in native Android for a growing retail brand.</p>
         </div>
       </article>
-      <article class="group rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
+      <article class="reveal d3 card-lift group rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
         <div class="pf w-full h-48">
           <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?w=800&q=80" alt="GetVPN App" loading="lazy">
         </div>
@@ -243,7 +261,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 <!-- BLOG -->
 <section id="blog" class="py-24 bg-zinc-50 dark:bg-zinc-900/40">
   <div class="max-w-6xl mx-auto px-6">
-    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14">
+    <div class="reveal flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14">
       <div>
         <p class="text-xs font-medium text-accent tracking-widest uppercase mb-3">Writing</p>
         <h2 class="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">From the Blog</h2>
@@ -251,7 +269,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
       <a href="blog.html" class="text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-accent transition-colors self-start sm:self-auto">All articles &rarr;</a>
     </div>
     <div class="grid md:grid-cols-3 gap-6">
-      <article class="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
+      <article class="reveal d1 card-lift group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
         <div class="pf w-full h-44"><img src="https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=700&q=80" alt="Clean Architecture" loading="lazy"></div>
         <div class="p-6">
           <div class="flex items-center gap-3 mb-3">
@@ -263,7 +281,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
           <a href="blog-article.html" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white">Read more &rarr;</a>
         </div>
       </article>
-      <article class="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
+      <article class="reveal d2 card-lift group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
         <div class="pf w-full h-44"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=700&q=80" alt="State management" loading="lazy"></div>
         <div class="p-6">
           <div class="flex items-center gap-3 mb-3">
@@ -275,7 +293,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
           <a href="blog-article-bloc.html" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white">Read more &rarr;</a>
         </div>
       </article>
-      <article class="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
+      <article class="reveal d3 card-lift group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors">
         <div class="pf w-full h-44"><img src="https://miro.medium.com/v2/resize:fit:800/1*3-M8z7qtE32OgRGQEBSX-Q.png" alt="Why Flutter is Better" loading="lazy"></div>
         <div class="p-6">
           <div class="flex items-center gap-3 mb-3">
@@ -296,7 +314,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
   <div class="max-w-6xl mx-auto px-6">
     <div class="grid md:grid-cols-2 gap-12 items-center">
       <!-- Left: text -->
-      <div>
+      <div class="reveal-left">
         <p class="text-xs font-medium text-accent tracking-widest uppercase mb-3">About me</p>
         <h2 class="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white mb-6">Diligent dev, team player</h2>
         <p class="text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4">
@@ -326,21 +344,21 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
         </div>
       </div>
       <!-- Right: photo + stats -->
-      <div class="flex flex-col gap-6">
+      <div class="reveal-right flex flex-col gap-6">
         <div class="pf w-full rounded-2xl overflow-hidden" style="height:320px">
           <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=800&q=80" alt="Flutter development" loading="lazy">
         </div>
         <div class="grid grid-cols-3 gap-px bg-zinc-200 dark:bg-zinc-800 rounded-2xl overflow-hidden">
           <div class="bg-white dark:bg-zinc-900 p-5 text-center">
-            <p class="font-display font-bold text-2xl text-zinc-900 dark:text-white">15+</p>
+            <p class="font-display font-bold text-2xl text-zinc-900 dark:text-white" data-count="15">15+</p>
             <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Apps shipped</p>
           </div>
           <div class="bg-white dark:bg-zinc-900 p-5 text-center">
-            <p class="font-display font-bold text-2xl text-zinc-900 dark:text-white">10+</p>
+            <p class="font-display font-bold text-2xl text-zinc-900 dark:text-white" data-count="10">10+</p>
             <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Years exp.</p>
           </div>
           <div class="bg-white dark:bg-zinc-900 p-5 text-center">
-            <p class="font-display font-bold text-2xl text-zinc-900 dark:text-white">6+</p>
+            <p class="font-display font-bold text-2xl text-zinc-900 dark:text-white" data-count="6">6+</p>
             <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Companies</p>
           </div>
         </div>
@@ -352,12 +370,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 <!-- EXPERIENCE -->
 <section id="experience" class="py-24">
   <div class="max-w-6xl mx-auto px-6">
-    <div class="mb-14">
+    <div class="reveal mb-14">
       <p class="text-xs font-medium text-accent tracking-widest uppercase mb-3">Career</p>
       <h2 class="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">Experience</h2>
     </div>
     <div class="flex flex-col gap-10">
-      <div class="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
+      <div class="reveal d1 grid md:grid-cols-2 gap-6 md:gap-12 items-start">
         <div class="md:text-right md:pr-12">
           <span class="inline-block text-xs font-medium text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-3 py-1 rounded-full mb-2">Dec 2023 — Present</span>
           <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white">Senior Flutter Developer</h3>
@@ -367,7 +385,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
           <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Leading cross-platform development for mobile, desktop, and web applications. Driving user-centric design decisions, collaborating directly with stakeholders, and mentoring junior developers to deliver high-quality products on schedule.</p>
         </div>
       </div>
-      <div class="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
+      <div class="reveal d2 grid md:grid-cols-2 gap-6 md:gap-12 items-start">
         <div class="md:text-right md:pr-12">
           <span class="inline-block text-xs font-medium text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-3 py-1 rounded-full mb-2">Jan 2020 — Nov 2023</span>
           <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white">Senior Mobile Application Developer</h3>
@@ -377,7 +395,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
           <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Directed application development across multiple product lines. Researched and introduced new development methodologies to boost team efficiency, and mentored junior developers in best practices.</p>
         </div>
       </div>
-      <div class="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
+      <div class="reveal d3 grid md:grid-cols-2 gap-6 md:gap-12 items-start">
         <div class="md:text-right md:pr-12">
           <span class="inline-block text-xs font-medium text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-3 py-1 rounded-full mb-2">Jul 2019 — Dec 2019</span>
           <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white">Senior Developer</h3>
@@ -387,7 +405,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
           <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Developed, installed, and configured internal applications and managed new release deployments into test and production environments.</p>
         </div>
       </div>
-      <div class="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
+      <div class="reveal d4 grid md:grid-cols-2 gap-6 md:gap-12 items-start">
         <div class="md:text-right md:pr-12">
           <span class="inline-block text-xs font-medium text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-3 py-1 rounded-full mb-2">Jan 2016 — Jun 2019</span>
           <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white">Android Developer</h3>
@@ -397,7 +415,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
           <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Built an e-commerce consumer app, inventory management system, rider app, and employee applications — a complete mobile ecosystem supporting multiple operations departments.</p>
         </div>
       </div>
-      <div class="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
+      <div class="reveal d5 grid md:grid-cols-2 gap-6 md:gap-12 items-start">
         <div class="md:text-right md:pr-12">
           <span class="inline-block text-xs font-medium text-zinc-500 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-3 py-1 rounded-full mb-2">Nov 2013 — Dec 2015</span>
           <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white">Android Developer</h3>
@@ -407,7 +425,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
           <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Participated in architectural decisions for mobile apps and supervised junior team members through code reviews and mentoring sessions.</p>
         </div>
       </div>
-      <div class="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
+      <div class="reveal d6 grid md:grid-cols-2 gap-6 md:gap-12 items-start">
         <div class="md:text-right md:pr-12">
           <span class="inline-block text-xs font-medium text-zinc-500 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-3 py-1 rounded-full mb-2">Mar 2014 — Mar 2015 · Part Time</span>
           <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white">Android Developer</h3>
@@ -417,7 +435,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
           <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Developed various mobile applications in collaboration with peer developers. Implemented new controls and methods in native Android development as part of a team.</p>
         </div>
       </div>
-      <div class="grid md:grid-cols-2 gap-6 md:gap-12 items-start">
+      <div class="reveal d7 grid md:grid-cols-2 gap-6 md:gap-12 items-start">
         <div class="md:text-right md:pr-12">
           <span class="inline-block text-xs font-medium text-zinc-500 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-3 py-1 rounded-full mb-2">Mar 2013 — Sep 2013</span>
           <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white">Junior Android Developer</h3>
@@ -435,9 +453,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 <section id="contact" class="py-24 bg-zinc-50 dark:bg-zinc-900/40">
   <div class="max-w-6xl mx-auto px-6">
     <div class="bg-zinc-100 dark:bg-zinc-900 rounded-3xl p-10 md:p-16 relative overflow-hidden">
-      <div class="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute bottom-0 left-0 w-40 h-40 bg-accent/10 rounded-full blur-2xl pointer-events-none"></div>
-      <div class="relative z-10 grid md:grid-cols-2 gap-12 items-start">
+      <div class="blob-pulse absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="blob-pulse absolute bottom-0 left-0 w-40 h-40 bg-accent/10 rounded-full blur-2xl pointer-events-none" style="animation-delay:2.5s"></div>
+      <div class="reveal relative z-10 grid md:grid-cols-2 gap-12 items-start">
         <div>
           <p class="text-xs font-medium text-accent tracking-widest uppercase mb-3">Get in touch</p>
           <h2 class="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white leading-tight mb-5">Let's build something great</h2>
@@ -541,6 +559,55 @@ function app() {
     }
   }
 }
+</script>
+
+<script>
+(function () {
+  // Scroll-reveal via IntersectionObserver
+  var revealObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(function (el) {
+    revealObserver.observe(el);
+  });
+
+  // Counter animation
+  function animateCounter(el) {
+    var target = parseInt(el.getAttribute('data-count'), 10);
+    var duration = 1400;
+    var frames = Math.round(duration / 16);
+    var step = target / frames;
+    var current = 0;
+    var timer = setInterval(function () {
+      current += step;
+      if (current >= target) {
+        el.textContent = target + '+';
+        clearInterval(timer);
+      } else {
+        el.textContent = Math.floor(current) + '+';
+      }
+    }, 16);
+  }
+
+  var counterObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('[data-count]').forEach(function (el) {
+    counterObserver.observe(el);
+  });
+})();
 </script>
 </body>
 </html>
