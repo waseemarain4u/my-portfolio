@@ -13,12 +13,14 @@
   <meta property="og:image" content="https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=1200&q=80">
   <link rel="canonical" href="https://waseemarain4u.github.io/my-portfolio/blog-article-kotlin.html">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="components/shared.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet"/>
   <script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{display:['PT Sans','sans-serif'],body:['DM Sans','sans-serif']},colors:{accent:'#2563EB','accent-light':'#3B82F6'}}}}</script>
   <style>
     *,*::before,*::after{box-sizing:border-box;}html{font-family:'DM Sans',sans-serif;}h1,h2,h3,h4,h5,h6{font-family:'PT Sans',sans-serif;}
-    body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.25;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");}[x-cloak]{display:none!important;}
+    body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.25;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");}
     ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:#2563EB;border-radius:99px;}
     
     
@@ -30,59 +32,9 @@
     .prose ul{list-style:disc;padding-left:1.5rem;color:rgb(113 113 122);margin-bottom:1.25rem;line-height:1.75;}.dark .prose ul{color:rgb(161 161 170);}
     
   </style>
-  <script>
-    document.addEventListener('DOMContentLoaded',()=>{
-      const d=document.documentElement;
-      const s=localStorage.getItem('theme');
-      if(s==='dark'||(s===null&&window.matchMedia('(prefers-color-scheme:dark)').matches)){d.classList.add('dark');}
-      document.getElementById('yr').textContent=new Date().getFullYear();
-      
-    });
-  </script>
 </head>
-<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
-
-
-  <header x-data="{mm:false}" class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5">
-    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-      <a href="index.html" class="font-display font-bold text-xl tracking-tight">
-        <span class="text-zinc-900 dark:text-white">waseem</span><span class="text-accent">.</span>
-      </a>
-      <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
-        <li><a href="index.html#services" class="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Skills</a></li>
-        <li><a href="projects.html" class="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Work</a></li>
-        <li><a href="index.html#about" class="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">About</a></li>
-        <li><a href="index.html#experience" class="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Experience</a></li>
-        <li><a href="blog.html" class="text-accent">Blog</a></li>
-        <li><a href="index.html#contact" class="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Contact</a></li>
-      </ul>
-      <div class="flex items-center gap-3">
-        <button onclick="const d=document.documentElement;d.classList.toggle('dark');localStorage.setItem('theme',d.classList.contains('dark')?'dark':'light')" class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors" aria-label="Toggle dark mode">
-          <svg class="w-4 h-4 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-          <svg class="w-4 h-4 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
-        </button>
-        <a href="index.html#contact" class="hidden md:inline-flex items-center gap-2 bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors">Hire me &rarr;</a>
-        <button @click="mm=!mm" class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800" :aria-expanded="mm" aria-label="Toggle menu">
-          <svg x-show="!mm" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-          <svg x-show="mm" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-    </nav>
-    <div x-show="mm" x-cloak
-      class="md:hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900">
-      <ul class="flex flex-col px-6 py-5 gap-4 text-sm font-medium">
-        <li><a href="index.html#services" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Skills</a></li>
-        <li><a href="projects.html" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Work</a></li>
-        <li><a href="index.html#about" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">About</a></li>
-        <li><a href="index.html#experience" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Experience</a></li>
-        <li><a href="blog.html" @click="mm=false" class="block text-accent">Blog</a></li>
-        <li><a href="index.html#contact" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Contact</a></li>
-        <li class="pt-2 border-t border-zinc-100 dark:border-zinc-900">
-          <a href="index.html#contact" @click="mm=false" class="inline-flex bg-accent text-white font-medium text-sm px-5 py-2.5 rounded-full">Hire me &rarr;</a>
-        </li>
-      </ul>
-    </div>
-  </header>
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased" data-page="blog">
+  <div id="site-nav"></div>
 
   <main class="pt-24">
     <section class="pt-12 pb-8 relative overflow-hidden">
@@ -161,12 +113,7 @@
     </section>
   </main>
 
-  <footer class="border-t border-zinc-100 dark:border-zinc-900">
-    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p class="text-sm text-zinc-400">&copy; <span id="yr"></span> Waseem Akram. All rights reserved.</p>
-      <p class="text-xs text-zinc-500">Senior Flutter Developer &amp; Lead Developer</p>
-    </div>
-  </footer>
+  <div id="site-footer"></div>
 
 </body>
 </html>
