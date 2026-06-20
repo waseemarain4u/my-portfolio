@@ -104,7 +104,7 @@
   function _initScrollHeader(scrollable) {
     var header = document.getElementById('site-header');
     if (!header || !scrollable) return;
-    header.classList.remove('bg-white/90', 'backdrop-blur-md', 'shadow-sm', 'shadow-black/5');
+    header.classList.remove('bg-white/90', 'dark:bg-zinc-950/90', 'backdrop-blur-md', 'shadow-sm', 'shadow-black/5');
     header.classList.add('bg-transparent');
     window.addEventListener('scroll', function () {
       if (window.scrollY > 20) {
