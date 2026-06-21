@@ -112,7 +112,7 @@
       return {
         filter: 'all',
         filterOptions: [
-          { value: 'all',       label: 'All (16)' },
+          { value: 'all',       label: 'All (17)' },
           { value: 'flutter',   label: 'Flutter' },
           { value: 'android',   label: 'Android' },
           { value: 'enterprise',label: 'Enterprise' },
@@ -135,6 +135,7 @@
           { id:14, title:'My Water — Customer',       category:'android',    categoryLabel:'Android',    tags:['Android','Utility'],                     year:'2020', desc:'Customer-facing utility app for water service billing, consumption tracking, and maintenance requests.',           img:'https://images.unsplash.com/photo-1548438294-1ad5d5f4f063?w=700&q=80', url:'case-study.html' },
           { id:15, title:'MyCart — E-commerce Suite', category:'ecommerce',  categoryLabel:'E-commerce', tags:['E-commerce','Android','Multi-app'],      year:'2019', desc:'Full e-commerce ecosystem: consumer app, inventory management, rider app, and employee portals — all in Android.',   img:'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=700&q=80', url:'case-study.html' },
           { id:16, title:'My Water — Technician',    category:'android',    categoryLabel:'Android',    tags:['Android','Utility','Field Service'],     year:'2020', desc:'Field technician app for water service operations — job assignment, on-site status updates, and service history management.', img:'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=700&q=80', url:'case-study.html' },
+          { id:17, title:'Quran Easy — English & Tamil', category:'flutter', categoryLabel:'Flutter', tags:['Flutter','Islamic','Dual Language'], desc:'Quran companion app with English & Tamil translations, verse bookmarking, personal notes, powerful search, and full offline access.', img:'https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=700&q=80', url:'case-study.html', playStore:'https://play.google.com/store/apps/details?id=io.united.quran.v2', appStore:'https://apps.apple.com/us/app/quran-easy-english-tamil/id6444725199' },
         ],
         get visibleCount() {
           if (this.filter === 'all') return this.allProjects.length;
