@@ -41,6 +41,9 @@ Control behavior via `<body>` attributes:
 - Container: `max-w-6xl mx-auto px-6`
 - Dark mode: class-based (`dark:`), toggled by `shared.js`, persisted in `localStorage` key `theme`
 
+## Project ordering rule
+- In `projects.html` (and any project list on `index.html`), always sort projects so those with a `playStore` or `appStore` link appear **first**, followed by those without. Within each group, preserve the existing order. Apply this whenever adding or reordering projects.
+
 ## Conventions
 - All new pages must include `<div id="site-nav"></div>` and `<div id="site-footer"></div>`
 - Load `shared.js` without `defer` so dark mode applies before paint: `<script src="components/shared.js"></script>`
