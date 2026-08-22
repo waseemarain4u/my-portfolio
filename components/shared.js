@@ -1,55 +1,79 @@
 (function () {
+  var ACTIVE_LINK_CLASS = 'text-accent font-medium';
+  var INACTIVE_LINK_CLASS = 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors';
+  var MOBILE_ACTIVE_LINK_CLASS = 'text-accent';
+  var MOBILE_INACTIVE_LINK_CLASS = 'text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors';
 
-  // Apply dark mode immediately (runs when script is parsed, before defer)
-  var _t = localStorage.getItem('theme');
-  if (_t === 'dark' || (_t === null && window.matchMedia('(prefers-color-scheme:dark)').matches)) {
-    document.documentElement.classList.add('dark');
+  function _applyStoredTheme() {
+    var savedTheme = null;
+    try {
+      savedTheme = localStorage.getItem('theme');
+    } catch (e) {}
+
+    if (savedTheme === 'dark' || (savedTheme === null && window.matchMedia('(prefers-color-scheme:dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
   }
+
+  _applyStoredTheme();
 
   var NAV_LINKS = [
-    { label: 'Skills',     href: 'index.html#services',  key: ''         },
-    { label: 'Work',       href: 'projects.html',         key: 'projects' },
-    { label: 'About',      href: 'index.html#about',      key: ''         },
-    { label: 'Experience', href: 'index.html#experience', key: ''         },
-    { label: 'Blog',       href: 'blog.html',             key: 'blog'     },
-    { label: 'Contact',    href: 'index.html#contact',    key: ''         },
+    { label: 'Skills',     section: 'services'   },
+    { label: 'AI',         section: 'ai-tools'   },
+    { label: 'Work',       section: 'work',       pageHref: 'projects.html', key: 'projects' },
+    { label: 'About',      section: 'about'      },
+    { label: 'Experience', section: 'experience' },
+    { label: 'Blog',       section: 'blog',       pageHref: 'blog.html', key: 'blog' },
+    { label: 'Contact',    section: 'contact'    },
   ];
 
-  function _activeClass(key, activePage) {
-    return (key && key === activePage)
-      ? 'text-accent font-medium'
-      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors';
+  function _isHome(activePage) {
+    return activePage === 'home';
   }
 
-  function _mobileActiveClass(key, activePage) {
-    return 'block ' + ((key && key === activePage)
-      ? 'text-accent'
-      : 'text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors');
+  function _href(link, activePage) {
+    if (_isHome(activePage) && link.section) return '#' + link.section;
+    return link.pageHref || ('index.html#' + link.section);
+  }
+
+  function _linkClass(link, activePage) {
+    return (link.key && link.key === activePage) ? ACTIVE_LINK_CLASS : INACTIVE_LINK_CLASS;
+  }
+
+  function _mobileLinkClass(link, activePage) {
+    return 'block ' + ((link.key && link.key === activePage) ? MOBILE_ACTIVE_LINK_CLASS : MOBILE_INACTIVE_LINK_CLASS);
+  }
+
+  function _linkAttrs(link) {
+    return link.section ? ' data-section="' + link.section + '"' : '';
   }
 
   function _navHTML(activePage) {
-    var desktopLinks = NAV_LINKS.map(function (l) {
-      return '<li><a href="' + l.href + '" class="' + _activeClass(l.key, activePage) + '">' + l.label + '</a></li>';
+    var desktopLinks = NAV_LINKS.map(function (link) {
+      return '<li><a href="' + _href(link, activePage) + '" class="' + _linkClass(link, activePage) + '"' + _linkAttrs(link) + '>' + link.label + '</a></li>';
     }).join('');
 
-    var mobileLinks = NAV_LINKS.map(function (l) {
-      return '<li><a href="' + l.href + '" class="' + _mobileActiveClass(l.key, activePage) + '">' + l.label + '</a></li>';
+    var mobileLinks = NAV_LINKS.map(function (link) {
+      return '<li><a href="' + _href(link, activePage) + '" class="' + _mobileLinkClass(link, activePage) + '"' + _linkAttrs(link) + '>' + link.label + '</a></li>';
     }).join('');
+
+    var logoHref = _isHome(activePage) ? '#hero' : 'index.html';
+    var contactHref = _isHome(activePage) ? '#contact' : 'index.html#contact';
 
     return '<header id="site-header" class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5 transition-all duration-300">'
       + '<nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">'
-      + '<a href="index.html" class="font-display font-bold text-xl tracking-tight">'
+      + '<a href="' + logoHref + '" class="font-display font-bold text-xl tracking-tight">'
       + '<span class="text-zinc-900 dark:text-white">waseem</span><span class="text-accent">.</span>'
       + '</a>'
       + '<ul class="hidden md:flex items-center gap-8 text-sm font-medium" role="list">'
       + desktopLinks
       + '</ul>'
       + '<div class="flex items-center gap-3">'
-      + '<button id="dark-toggle" onclick="(function(){var d=document.documentElement;d.classList.toggle(\'dark\');localStorage.setItem(\'theme\',d.classList.contains(\'dark\')?\'dark\':\'light\')})()" class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors" aria-label="Toggle dark mode">'
+      + '<button id="dark-toggle" class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors" aria-label="Toggle dark mode">'
       + '<svg id="icon-moon" class="w-4 h-4 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>'
       + '<svg id="icon-sun" class="w-4 h-4 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>'
       + '</button>'
-      + '<a href="index.html#contact" class="hidden md:inline-flex items-center gap-2 bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors">Hire me &rarr;</a>'
+      + '<a href="' + contactHref + '" class="hidden md:inline-flex items-center gap-2 bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors">Hire me &rarr;</a>'
       + '<button id="mobile-menu-btn" class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800" aria-label="Toggle menu" aria-expanded="false">'
       + '<svg id="icon-open" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>'
       + '<svg id="icon-close" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>'
@@ -60,7 +84,7 @@
       + '<ul class="flex flex-col px-6 py-5 gap-4 text-sm font-medium" role="list">'
       + mobileLinks
       + '<li class="pt-2 border-t border-zinc-100 dark:border-zinc-900">'
-      + '<a href="index.html#contact" class="inline-flex bg-accent text-white font-medium text-sm px-5 py-2.5 rounded-full">Hire me &rarr;</a>'
+      + '<a href="' + contactHref + '" class="inline-flex bg-accent text-white font-medium text-sm px-5 py-2.5 rounded-full">Hire me &rarr;</a>'
       + '</li>'
       + '</ul>'
       + '</div>'
@@ -81,6 +105,25 @@
       + '</div>'
       + '</div>'
       + '</footer>';
+  }
+
+  function _setDarkToggleLabel() {
+    var btn = document.getElementById('dark-toggle');
+    if (!btn) return;
+    btn.setAttribute('aria-label', document.documentElement.classList.contains('dark') ? 'Switch to light mode' : 'Switch to dark mode');
+  }
+
+  function _initDarkToggle() {
+    var btn = document.getElementById('dark-toggle');
+    if (!btn) return;
+    _setDarkToggleLabel();
+    btn.addEventListener('click', function () {
+      document.documentElement.classList.toggle('dark');
+      try {
+        localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+      } catch (e) {}
+      _setDarkToggleLabel();
+    });
   }
 
   function _initMobileMenu() {
@@ -111,9 +154,8 @@
   function _initScrollHeader(scrollable) {
     var header = document.getElementById('site-header');
     if (!header || !scrollable) return;
-    header.classList.remove('bg-white/90', 'dark:bg-zinc-950/90', 'backdrop-blur-md', 'shadow-sm', 'shadow-black/5');
-    header.classList.add('bg-transparent');
-    window.addEventListener('scroll', function () {
+
+    function updateHeader() {
       if (window.scrollY > 20) {
         header.classList.add('bg-white/90', 'dark:bg-zinc-950/90', 'backdrop-blur-md', 'shadow-sm', 'shadow-black/5');
         header.classList.remove('bg-transparent');
@@ -121,22 +163,70 @@
         header.classList.remove('bg-white/90', 'dark:bg-zinc-950/90', 'backdrop-blur-md', 'shadow-sm', 'shadow-black/5');
         header.classList.add('bg-transparent');
       }
-    }, { passive: true });
+    }
+
+    updateHeader();
+    window.addEventListener('scroll', updateHeader, { passive: true });
   }
 
-  // Auto-initialize using data attributes on <body>
-  // Usage: <body data-page="blog"> or <body data-page="projects" data-scroll-header="true">
-  var body = document.body;
-  var activePage = body ? (body.getAttribute('data-page') || '') : '';
-  var scrollHeader = body ? body.getAttribute('data-scroll-header') === 'true' : false;
+  function _setHomeActiveSection(section) {
+    document.querySelectorAll('[data-section]').forEach(function (link) {
+      var isActive = link.getAttribute('data-section') === section;
+      if (link.closest('#mobile-nav')) {
+        link.className = 'block ' + (isActive ? MOBILE_ACTIVE_LINK_CLASS : MOBILE_INACTIVE_LINK_CLASS);
+      } else {
+        link.className = isActive ? ACTIVE_LINK_CLASS : INACTIVE_LINK_CLASS;
+      }
+    });
+  }
 
-  var navSlot = document.getElementById('site-nav');
-  if (navSlot) navSlot.outerHTML = _navHTML(activePage);
+  function _initHomeSectionState(activePage) {
+    if (!_isHome(activePage)) return;
 
-  var footerSlot = document.getElementById('site-footer');
-  if (footerSlot) footerSlot.outerHTML = _footerHTML();
+    function updateSection() {
+      var atBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 60;
+      if (atBottom) {
+        _setHomeActiveSection('contact');
+        return;
+      }
 
-  _initMobileMenu();
-  _initScrollHeader(scrollHeader);
+      var ids = ['contact', 'experience', 'about', 'blog', 'work', 'ai-tools', 'services'];
+      for (var i = 0; i < ids.length; i++) {
+        var el = document.getElementById(ids[i]);
+        if (el && window.scrollY >= el.offsetTop - 130) {
+          _setHomeActiveSection(ids[i]);
+          return;
+        }
+      }
+      _setHomeActiveSection('');
+    }
 
+    updateSection();
+    window.addEventListener('scroll', updateSection, { passive: true });
+  }
+
+  function _init() {
+    var body = document.body;
+    if (!body) return;
+
+    var activePage = body.getAttribute('data-page') || '';
+    var scrollHeader = body.getAttribute('data-scroll-header') === 'true';
+
+    var navSlot = document.getElementById('site-nav');
+    if (navSlot) navSlot.outerHTML = _navHTML(activePage);
+
+    var footerSlot = document.getElementById('site-footer');
+    if (footerSlot) footerSlot.outerHTML = _footerHTML();
+
+    _initDarkToggle();
+    _initMobileMenu();
+    _initScrollHeader(scrollHeader);
+    _initHomeSectionState(activePage);
+  }
+
+  if (document.body) {
+    _init();
+  } else {
+    document.addEventListener('DOMContentLoaded', _init);
+  }
 })();
