@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>From Commit to TestFlight and Google Play: Building a Flutter CI/CD Pipeline — Waseem Akram</title>
+  <meta name="description" content="How automated testing, signing, validation, and mobile release workflows turn Flutter deployments into a repeatable pipeline for iOS and Android.">
+  <meta name="author" content="Waseem Akram">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://waseemarain4u.github.io/my-portfolio/blog-article-flutter-ci-cd.html">
+  <meta property="og:title" content="From Commit to TestFlight and Google Play: Building a Flutter CI/CD Pipeline — Waseem Akram">
+  <meta property="og:description" content="How automated testing, signing, validation, and mobile release workflows turn Flutter deployments into a repeatable pipeline for iOS and Android.">
+  <meta property="og:image" content="https://waseemarain4u.github.io/my-portfolio/assets/img/flutter-ci-cd-pipeline-banner.png">
+  <link rel="canonical" href="https://waseemarain4u.github.io/my-portfolio/blog-article-flutter-ci-cd.html">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="components/shared.js?v=20260822"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{display:['Space Grotesk','sans-serif'],body:['Inter','sans-serif']},colors:{accent:'#2563EB','accent-light':'#3B82F6'}}}}</script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;}html{font-family:'Inter',sans-serif;}h1,h2,h3,h4,h5,h6{font-family:'Space Grotesk',sans-serif;}
+    body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.25;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");}
+    ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:#2563EB;border-radius:99px;}
+    .pf{overflow:hidden;background:#e4e4e7;}.pf img{width:100%;height:100%;object-fit:cover;display:block;}
+    .prose p{color:rgb(113 113 122);margin-bottom:1.25rem;line-height:1.75;}
+    .prose h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.5rem;color:rgb(24 24 27);margin-bottom:1rem;margin-top:2.5rem;}
+    .dark .prose p{color:rgb(161 161 170);}.dark .prose h2{color:white;}
+    .prose pre{background:rgb(24 24 27);color:#e4e4e7;padding:1.25rem;border-radius:0.75rem;overflow-x:auto;font-size:0.8rem;margin:1.5rem 0;font-family:monospace;}
+    .prose ul{list-style:disc;padding-left:1.5rem;color:rgb(113 113 122);margin-bottom:1.25rem;line-height:1.75;}.dark .prose ul{color:rgb(161 161 170);}
+  </style>
+</head>
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased" data-page="blog">
+  <div id="site-nav"></div>
+
+  <main class="pt-24">
+    <section class="pt-12 pb-8 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="max-w-3xl mx-auto px-6 relative z-10">
+        <a href="blog.html" class="inline-flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400 hover:text-accent transition-colors mb-8">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          All articles
+        </a>
+        <div class="flex flex-wrap items-center gap-3 mb-5">
+          <span class="text-xs bg-blue-50 dark:bg-zinc-800 text-accent border border-blue-200 dark:border-zinc-700 px-2.5 py-1 rounded-full">Flutter</span>
+          <span class="text-xs bg-blue-50 dark:bg-zinc-800 text-accent border border-blue-200 dark:border-zinc-700 px-2.5 py-1 rounded-full">CI/CD</span>
+          <span class="text-xs text-zinc-400">Sep 11, 2026 · 5 min read</span>
+          <a href="https://medium.com/@waseemarain_98671/from-commit-to-testflight-and-google-play-building-a-flutter-ci-cd-pipeline-92f9b49edf69" target="_blank" rel="noopener" class="text-xs text-zinc-400 hover:text-accent transition-colors flex items-center gap-1">
+            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            Originally on Medium
+          </a>
+        </div>
+        <h1 class="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white mb-5 leading-tight">From Commit to TestFlight and Google Play: Building a Flutter CI/CD Pipeline</h1>
+        <p class="text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed mb-8">How automated testing, signing, validation, and mobile release workflows can turn Flutter deployments into a repeatable pipeline for both iOS and Android.</p>
+        <div class="flex items-center gap-3 pb-8 border-b border-zinc-100 dark:border-zinc-800">
+          <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-bold text-sm shrink-0">WA</div>
+          <div>
+            <p class="text-sm font-medium text-zinc-900 dark:text-white">Waseem Akram</p>
+            <p class="text-xs text-zinc-500">Lead Mobile Developer &amp; Software Engineer</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="max-w-5xl mx-auto px-6 mb-12">
+      <div class="pf w-full rounded-2xl overflow-hidden aspect-[16/9]">
+        <img src="assets/img/flutter-ci-cd-pipeline-banner.png" alt="Flutter CI/CD pipeline from commit to TestFlight and Google Play" loading="eager">
+      </div>
+    </div>
+
+    <article class="max-w-3xl mx-auto px-6 pb-24 prose">
+      <p>Shipping a Flutter app is not finished when the code compiles. A real release still needs tests, signing, build validation, artifact checks, and distribution to the right platform. A CI/CD pipeline makes those steps repeatable so every release follows the same path.</p>
+
+      <h2>The release problem</h2>
+      <p>Manual mobile releases work in the beginning, but they do not scale well. One missed command, one expired certificate, one wrong build flavor, or one skipped validation step can block a release. The goal of a pipeline is to reduce that risk by making the release process predictable.</p>
+
+      <h2>What the pipeline should do</h2>
+      <p>A production Flutter pipeline should move from source code to tested release artifacts through clear quality gates. Each gate answers one question before the next step starts.</p>
+      <ul>
+        <li>Checkout the source code from the repository.</li>
+        <li>Install Flutter dependencies and platform tooling.</li>
+        <li>Analyze the code and run automated tests.</li>
+        <li>Build signed Android and iOS artifacts.</li>
+        <li>Validate the generated files before distribution.</li>
+        <li>Upload Android builds to Google Play and iOS builds to TestFlight.</li>
+      </ul>
+
+      <h2>GitHub Actions as the automation layer</h2>
+      <p>GitHub Actions is a practical choice because it lives close to the repository and can run on every push, pull request, or release tag. For Flutter, the workflow usually starts with checkout, Flutter setup, dependency installation, analysis, and tests.</p>
+      <pre>name: Mobile Release
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test</pre>
+
+      <h2>Building for both stores</h2>
+      <p>Android and iOS have different signing and packaging requirements, but the high-level flow is the same. The pipeline should produce a trusted artifact and only deploy it after the previous gates pass.</p>
+      <pre>- run: flutter build appbundle --release
+- run: flutter build ipa --release</pre>
+      <p>Secrets such as keystores, provisioning profiles, API keys, and service account files should stay in secure CI secret storage. The repository should contain the workflow logic, not the private credentials.</p>
+
+      <h2>Distribution and confidence</h2>
+      <p>Once the builds are validated, deployment can be handled through Google Play upload actions, Fastlane, or App Store Connect tooling. The important point is consistency: every release should be created, tested, signed, and delivered through the same process.</p>
+
+      <h2>The result</h2>
+      <p>A strong CI/CD pipeline gives the team faster releases, fewer manual steps, better traceability, and a more reliable path from commit to production. For mobile teams, that reliability matters because app-store releases have more moving parts than a normal web deployment.</p>
+    </article>
+
+    <section class="bg-zinc-50 dark:bg-zinc-900/40 py-16">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="font-display font-bold text-2xl text-zinc-900 dark:text-white mb-8">More articles</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          <article class="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-all hover:-translate-y-1">
+            <div class="pf w-full h-40"><img src="https://miro.medium.com/v2/resize:fit:800/1*3-M8z7qtE32OgRGQEBSX-Q.png" alt="Why Flutter is Better" loading="lazy"></div>
+            <div class="p-5"><p class="text-xs text-zinc-400 mb-2">Jun 21, 2023</p>
+            <a href="blog-article-why-flutter.html"><h3 class="font-display font-bold text-base text-zinc-900 dark:text-white group-hover:text-accent transition-colors">Why Flutter is better?</h3></a></div>
+          </article>
+          <article class="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-all hover:-translate-y-1">
+            <div class="pf w-full h-40"><img src="assets/img/android-multi-display-banner.png" alt="Multi-Display Android" loading="lazy"></div>
+            <div class="p-5"><p class="text-xs text-zinc-400 mb-2">Apr 11, 2025</p>
+            <a href="blog-article-multi-display.html"><h3 class="font-display font-bold text-base text-zinc-900 dark:text-white group-hover:text-accent transition-colors">Multi-Display Magic in Android</h3></a></div>
+          </article>
+          <article class="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-all hover:-translate-y-1">
+            <div class="pf w-full h-40"><img src="assets/img/flutter-star-rating-widget-banner.png" alt="Star Rating Widget" loading="lazy"></div>
+            <div class="p-5"><p class="text-xs text-zinc-400 mb-2">Dec 10, 2024</p>
+            <a href="blog-article-star-rating.html"><h3 class="font-display font-bold text-base text-zinc-900 dark:text-white group-hover:text-accent transition-colors">Building a Custom Interactive Star Rating Widget in Flutter</h3></a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+</body>
+</html>
